@@ -1,0 +1,117 @@
+{
+ "created": "2026-11-12T17:44:51+00:00",
+ "reference": {
+  "tool": "CICFlowMeter (github.com/ahlashkari/CICFlowMeter) flow code, commit eaa853d (2018-02-13), unmodified",
+  "driver": "tools/cicflowmeter_ref/RefDriver.java reads the pcap and fills the packet fields like PacketReader.java"
+ },
+ "captures": [
+  {
+   "capture": "ordinary_wifi.pcap",
+   "kind": "ordinary traffic (real Wi-Fi capture)",
+   "packets": 8990,
+   "flows": 315,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 315,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 0,
+   "single_packet_flows_dropped": 107,
+   "ipv4_packets_checked_vs_tshark": 7213,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "ordinary_wifi2.pcap",
+   "kind": "ordinary traffic (real Wi-Fi capture)",
+   "packets": 57164,
+   "flows": 562,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 562,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 0,
+   "single_packet_flows_dropped": 133,
+   "ipv4_packets_checked_vs_tshark": 54944,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "ordinary_live.pcap",
+   "kind": "ordinary traffic (real Wi-Fi capture)",
+   "packets": 12377,
+   "flows": 272,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 272,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 0,
+   "single_packet_flows_dropped": 78,
+   "ipv4_packets_checked_vs_tshark": 12377,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "demo_synthetic.pcap",
+   "kind": "synthetic demo capture",
+   "packets": 383,
+   "flows": 56,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 56,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 0,
+   "single_packet_flows_dropped": 0,
+   "ipv4_packets_checked_vs_tshark": 381,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "stress_seed1.pcap",
+   "kind": "randomised stress capture",
+   "packets": 7857,
+   "flows": 1163,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 1163,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 110,
+   "single_packet_flows_dropped": 50,
+   "ipv4_packets_checked_vs_tshark": 7857,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "stress_seed7.pcap",
+   "kind": "randomised stress capture",
+   "packets": 7877,
+   "flows": 1174,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 1174,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 98,
+   "single_packet_flows_dropped": 57,
+   "ipv4_packets_checked_vs_tshark": 7877,
+   "packet_field_mismatches": 0
+  },
+  {
+   "capture": "stress_seed21.pcap",
+   "kind": "randomised stress capture",
+   "packets": 7903,
+   "flows": 1159,
+   "flows_only_in_reference": 0,
+   "flows_only_in_this_project": 0,
+   "flows_with_all_69_features_equal": 1159,
+   "features_that_differ": {},
+   "zero_duration_flows_rate_excluded": 103,
+   "single_packet_flows_dropped": 51,
+   "ipv4_packets_checked_vs_tshark": 7903,
+   "packet_field_mismatches": 0
+  }
+ ],
+ "total": {
+  "captures": 7,
+  "packets": 102551,
+  "flows_compared": 4701,
+  "flows_with_all_69_features_equal": 4701,
+  "flows_missing_on_either_side": 0,
+  "ipv4_packets_checked_vs_tshark": 98552,
+  "packet_field_mismatches": 0,
+  "ordinary_traffic_flows": 1149
+ }
+}

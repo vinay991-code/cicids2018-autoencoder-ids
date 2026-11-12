@@ -1,0 +1,3277 @@
+{
+  "config": {
+    "out_dir": "results",
+    "tag": "main",
+    "baseline_tag": "main",
+    "interval_records": 50000,
+    "sample": 10000,
+    "window": 6,
+    "retrain_every": 3,
+    "buffer_intervals": 12,
+    "replay_frac": 0.25,
+    "ft_epochs": 3,
+    "ft_lr": 0.0005,
+    "ft_batch": 1024,
+    "anchor_tol": 3.0,
+    "min_trusted": 5000,
+    "anchor_q": 0.95,
+    "margin": 0.5,
+    "level_tol": 0.5,
+    "susp_max": 0.15,
+    "persist": 3,
+    "ewma": 0.1,
+    "response": 3,
+    "recent_intervals": 3,
+    "q_rel": 0.8,
+    "adwin_delta": 0.002,
+    "monitor_batch": 5000,
+    "ref_records": 300000,
+    "warm_days": 2,
+    "max_intervals": null,
+    "seed": 42
+  },
+  "baseline": {
+    "warm_days": [
+      "2018-02-14",
+      "2018-02-15"
+    ],
+    "eval_days": [
+      "2018-02-16",
+      "2018-02-20",
+      "2018-02-21",
+      "2018-02-22",
+      "2018-02-23",
+      "2018-02-28",
+      "2018-03-01",
+      "2018-03-02"
+    ],
+    "warm_records": 1271783,
+    "warm_benign": 1126439,
+    "init_train_rows": 500000,
+    "init_val_rows": 225288,
+    "epochs": 50,
+    "train_seconds": 199.2748670578003,
+    "thr0": 0.01393706165254116,
+    "k": 4.286163087378228,
+    "val_median_error": 2.4310886146849953e-05,
+    "eval_records": 9504036
+  },
+  "types": [
+    "Benign",
+    "DoS-SlowHTTPTest",
+    "DoS-Hulk",
+    "DDoS-LOIC-HTTP",
+    "DDoS-LOIC-UDP",
+    "DDoS-HOIC",
+    "WebBruteForce",
+    "SQLInjection",
+    "WebXSS",
+    "Infiltration",
+    "Bot"
+  ],
+  "arms": {
+    "A_no_detection": {
+      "overall": {
+        "n": 9504036,
+        "attacks": 1158860,
+        "tp": 815315,
+        "fp": 1336487,
+        "fn": 343545,
+        "tn": 7008689,
+        "precision": 0.37889870908196943,
+        "recall": 0.7035491776400946,
+        "f1": 0.49253895444476065,
+        "fpr": 0.16015084642912264,
+        "flagged_share": 0.2264092854867132
+      },
+      "per_day": {
+        "2018-02-16": {
+          "n": 591870,
+          "attacks": 145254,
+          "tp": 87162,
+          "fp": 444743,
+          "fn": 58092,
+          "tn": 1873,
+          "precision": 0.16386760793750763,
+          "recall": 0.600066091123136,
+          "f1": 0.2574343691806503,
+          "fpr": 0.9958062407079012,
+          "flagged_share": 0.8986855221585821
+        },
+        "2018-02-20": {
+          "n": 5432970,
+          "attacks": 575364,
+          "tp": 541487,
+          "fp": 340286,
+          "fn": 33877,
+          "tn": 4517320,
+          "precision": 0.6140888868223454,
+          "recall": 0.94112075138521,
+          "f1": 0.7432204384350958,
+          "fpr": 0.07005220266938077,
+          "flagged_share": 0.16230036241687326
+        },
+        "2018-02-21": {
+          "n": 561354,
+          "attacks": 200590,
+          "tp": 165480,
+          "fp": 360533,
+          "fn": 35110,
+          "tn": 231,
+          "precision": 0.31459298534446867,
+          "recall": 0.8249663492696545,
+          "f1": 0.4554894488462062,
+          "fpr": 0.999359692208757,
+          "flagged_share": 0.9370432917552917
+        },
+        "2018-02-22": {
+          "n": 744193,
+          "attacks": 319,
+          "tp": 130,
+          "fp": 46844,
+          "fn": 189,
+          "tn": 697030,
+          "precision": 0.002767488397837101,
+          "recall": 0.40752351097178685,
+          "f1": 0.005497642357219884,
+          "fpr": 0.06297303037880071,
+          "flagged_share": 0.06312072271574712
+        },
+        "2018-02-23": {
+          "n": 828043,
+          "attacks": 535,
+          "tp": 291,
+          "fp": 50044,
+          "fn": 244,
+          "tn": 777464,
+          "precision": 0.005781265521009238,
+          "recall": 0.5439252336448598,
+          "f1": 0.011440927855317477,
+          "fpr": 0.0604755482726451,
+          "flagged_share": 0.06078790594208272
+        },
+        "2018-02-28": {
+          "n": 377006,
+          "attacks": 43299,
+          "tp": 6085,
+          "fp": 42617,
+          "fn": 37214,
+          "tn": 291090,
+          "precision": 0.12494353414644162,
+          "recall": 0.1405344234277928,
+          "f1": 0.1322811708568385,
+          "fpr": 0.12770783951190715,
+          "flagged_share": 0.12918096794215478
+        },
+        "2018-03-01": {
+          "n": 211994,
+          "attacks": 49162,
+          "tp": 8941,
+          "fp": 15754,
+          "fn": 40221,
+          "tn": 147078,
+          "precision": 0.3620570965782547,
+          "recall": 0.18186810951547944,
+          "f1": 0.24211652246909574,
+          "fpr": 0.09675002456519603,
+          "flagged_share": 0.11648914591922413
+        },
+        "2018-03-02": {
+          "n": 756606,
+          "attacks": 144337,
+          "tp": 5739,
+          "fp": 35666,
+          "fn": 138598,
+          "tn": 576603,
+          "precision": 0.1386064484965584,
+          "recall": 0.03976111461371651,
+          "f1": 0.061795393610491973,
+          "fpr": 0.05825217347277096,
+          "flagged_share": 0.05472465193244568
+        }
+      },
+      "per_type": {
+        "Benign": {
+          "n": 8345176,
+          "flagged_share": 0.16015084642912264
+        },
+        "DoS-SlowHTTPTest": {
+          "n": 55,
+          "flagged_share": 1.0
+        },
+        "DoS-Hulk": {
+          "n": 145199,
+          "flagged_share": 0.5999145999628097
+        },
+        "DDoS-LOIC-HTTP": {
+          "n": 575364,
+          "flagged_share": 0.94112075138521
+        },
+        "DDoS-LOIC-UDP": {
+          "n": 1730,
+          "flagged_share": 1.0
+        },
+        "DDoS-HOIC": {
+          "n": 198860,
+          "flagged_share": 0.823443628683496
+        },
+        "WebBruteForce": {
+          "n": 551,
+          "flagged_share": 0.484573502722323
+        },
+        "SQLInjection": {
+          "n": 78,
+          "flagged_share": 0.5128205128205128
+        },
+        "WebXSS": {
+          "n": 225,
+          "flagged_share": 0.5066666666666667
+        },
+        "Infiltration": {
+          "n": 92461,
+          "flagged_share": 0.16251176171575044
+        },
+        "Bot": {
+          "n": 144337,
+          "flagged_share": 0.03976111461371651
+        }
+      },
+      "retrain_log": [],
+      "drift_log": []
+    },
+    "A2_periodic": {
+      "overall": {
+        "n": 9504036,
+        "attacks": 1158860,
+        "tp": 163453,
+        "fp": 555621,
+        "fn": 995407,
+        "tn": 7789555,
+        "precision": 0.22731040198922503,
+        "recall": 0.14104637315982949,
+        "f1": 0.1740774702412332,
+        "fpr": 0.06657990196971281,
+        "flagged_share": 0.07565985650727754
+      },
+      "per_day": {
+        "2018-02-16": {
+          "n": 591870,
+          "attacks": 145254,
+          "tp": 34484,
+          "fp": 110061,
+          "fn": 110770,
+          "tn": 336555,
+          "precision": 0.2385693036770556,
+          "recall": 0.23740482189819212,
+          "f1": 0.23798563832173333,
+          "fpr": 0.2464331774947606,
+          "flagged_share": 0.24421748018990658
+        },
+        "2018-02-20": {
+          "n": 5432970,
+          "attacks": 575364,
+          "tp": 35795,
+          "fp": 243889,
+          "fn": 539569,
+          "tn": 4613717,
+          "precision": 0.12798372448906623,
+          "recall": 0.06221279051174561,
+          "f1": 0.08372629372853921,
+          "fpr": 0.050207653729017955,
+          "flagged_share": 0.05147902528451289
+        },
+        "2018-02-21": {
+          "n": 561354,
+          "attacks": 200590,
+          "tp": 74830,
+          "fp": 53541,
+          "fn": 125760,
+          "tn": 307223,
+          "precision": 0.582919818339033,
+          "recall": 0.3730495039633082,
+          "f1": 0.4549475469736534,
+          "fpr": 0.14841004091317314,
+          "flagged_share": 0.22868101055661846
+        },
+        "2018-02-22": {
+          "n": 744193,
+          "attacks": 319,
+          "tp": 160,
+          "fp": 32383,
+          "fn": 159,
+          "tn": 711491,
+          "precision": 0.0049165719202286205,
+          "recall": 0.5015673981191222,
+          "f1": 0.009737690950033472,
+          "fpr": 0.0435329101433845,
+          "flagged_share": 0.04372924765484223
+        },
+        "2018-02-23": {
+          "n": 828043,
+          "attacks": 535,
+          "tp": 187,
+          "fp": 39291,
+          "fn": 348,
+          "tn": 788217,
+          "precision": 0.004736815441511728,
+          "recall": 0.34953271028037386,
+          "f1": 0.009346962237272887,
+          "fpr": 0.0474811119650807,
+          "flagged_share": 0.047676268019897515
+        },
+        "2018-02-28": {
+          "n": 377006,
+          "attacks": 43299,
+          "tp": 4655,
+          "fp": 32028,
+          "fn": 38644,
+          "tn": 301679,
+          "precision": 0.12689801815554888,
+          "recall": 0.10750825654172151,
+          "f1": 0.11640119026781025,
+          "fpr": 0.0959764104438924,
+          "flagged_share": 0.09730083871344222
+        },
+        "2018-03-01": {
+          "n": 211994,
+          "attacks": 49162,
+          "tp": 5576,
+          "fp": 10300,
+          "fn": 43586,
+          "tn": 152532,
+          "precision": 0.3512219702695893,
+          "recall": 0.11342093486839429,
+          "f1": 0.17146898736123498,
+          "fpr": 0.06325537977793062,
+          "flagged_share": 0.07488891195033821
+        },
+        "2018-03-02": {
+          "n": 756606,
+          "attacks": 144337,
+          "tp": 7766,
+          "fp": 34128,
+          "fn": 136571,
+          "tn": 578141,
+          "precision": 0.185372607055903,
+          "recall": 0.05380463775747037,
+          "f1": 0.08340179669335396,
+          "fpr": 0.05574020569390252,
+          "flagged_share": 0.05537095925752637
+        }
+      },
+      "per_type": {
+        "Benign": {
+          "n": 8345176,
+          "flagged_share": 0.06657990196971281
+        },
+        "DoS-SlowHTTPTest": {
+          "n": 55,
+          "flagged_share": 1.0
+        },
+        "DoS-Hulk": {
+          "n": 145199,
+          "flagged_share": 0.23711595809888497
+        },
+        "DDoS-LOIC-HTTP": {
+          "n": 575364,
+          "flagged_share": 0.06221279051174561
+        },
+        "DDoS-LOIC-UDP": {
+          "n": 1730,
+          "flagged_share": 1.0
+        },
+        "DDoS-HOIC": {
+          "n": 198860,
+          "flagged_share": 0.36759529317107514
+        },
+        "WebBruteForce": {
+          "n": 551,
+          "flagged_share": 0.3629764065335753
+        },
+        "SQLInjection": {
+          "n": 78,
+          "flagged_share": 0.48717948717948717
+        },
+        "WebXSS": {
+          "n": 225,
+          "flagged_share": 0.48444444444444446
+        },
+        "Infiltration": {
+          "n": 92461,
+          "flagged_share": 0.11065205870583272
+        },
+        "Bot": {
+          "n": 144337,
+          "flagged_share": 0.05380463775747037
+        }
+      },
+      "retrain_log": [
+        {
+          "interval": 2,
+          "trigger": "periodic",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.35813333333333336,
+          "attack_records_in_buffer": 10744,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.4975887537002563,
+          "accepted": true
+        },
+        {
+          "interval": 5,
+          "trigger": "periodic",
+          "trusted_records": 60000,
+          "trusted_attack_share": 0.29751666666666665,
+          "attack_records_in_buffer": 17851,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.2183990478515625,
+          "accepted": true
+        },
+        {
+          "interval": 8,
+          "trigger": "periodic",
+          "trusted_records": 90000,
+          "trusted_attack_share": 0.26414444444444446,
+          "attack_records_in_buffer": 23773,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1377109289169312,
+          "accepted": true
+        },
+        {
+          "interval": 11,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.24496666666666667,
+          "attack_records_in_buffer": 29396,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.102776050567627,
+          "accepted": true
+        },
+        {
+          "interval": 14,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.15543333333333334,
+          "attack_records_in_buffer": 18652,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0551453828811646,
+          "accepted": true
+        },
+        {
+          "interval": 17,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.09620833333333334,
+          "attack_records_in_buffer": 11545,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.024531602859497,
+          "accepted": true
+        },
+        {
+          "interval": 20,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.046858333333333335,
+          "attack_records_in_buffer": 5623,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0080890655517578,
+          "accepted": true
+        },
+        {
+          "interval": 23,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9930530190467834,
+          "accepted": true
+        },
+        {
+          "interval": 26,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9832202196121216,
+          "accepted": true
+        },
+        {
+          "interval": 29,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9794873595237732,
+          "accepted": true
+        },
+        {
+          "interval": 32,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0444,
+          "attack_records_in_buffer": 5328,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9752114415168762,
+          "accepted": true
+        },
+        {
+          "interval": 35,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.16875,
+          "attack_records_in_buffer": 20250,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9815853834152222,
+          "accepted": true
+        },
+        {
+          "interval": 38,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.28305,
+          "attack_records_in_buffer": 33966,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9743871688842773,
+          "accepted": true
+        },
+        {
+          "interval": 41,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.4053,
+          "attack_records_in_buffer": 48636,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9719353914260864,
+          "accepted": true
+        },
+        {
+          "interval": 44,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.48549166666666665,
+          "attack_records_in_buffer": 58259,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9694485068321228,
+          "accepted": true
+        },
+        {
+          "interval": 47,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.485175,
+          "attack_records_in_buffer": 58221,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9679096341133118,
+          "accepted": true
+        },
+        {
+          "interval": 50,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.48804166666666665,
+          "attack_records_in_buffer": 58565,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9642334580421448,
+          "accepted": true
+        },
+        {
+          "interval": 53,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.4877916666666667,
+          "attack_records_in_buffer": 58535,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9752895832061768,
+          "accepted": true
+        },
+        {
+          "interval": 56,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.4257916666666667,
+          "attack_records_in_buffer": 51095,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9673077464103699,
+          "accepted": true
+        },
+        {
+          "interval": 59,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.30175833333333335,
+          "attack_records_in_buffer": 36211,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9658617377281189,
+          "accepted": true
+        },
+        {
+          "interval": 62,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.18459166666666665,
+          "attack_records_in_buffer": 22151,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9624102115631104,
+          "accepted": true
+        },
+        {
+          "interval": 65,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.06259166666666667,
+          "attack_records_in_buffer": 7511,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.954658567905426,
+          "accepted": true
+        },
+        {
+          "interval": 68,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9553024172782898,
+          "accepted": true
+        },
+        {
+          "interval": 71,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9507015943527222,
+          "accepted": true
+        },
+        {
+          "interval": 74,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9490867853164673,
+          "accepted": true
+        },
+        {
+          "interval": 77,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0012166666666666667,
+          "attack_records_in_buffer": 146,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9525178074836731,
+          "accepted": true
+        },
+        {
+          "interval": 80,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.00135,
+          "attack_records_in_buffer": 162,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9518158435821533,
+          "accepted": true
+        },
+        {
+          "interval": 83,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.00135,
+          "attack_records_in_buffer": 162,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9454011917114258,
+          "accepted": true
+        },
+        {
+          "interval": 86,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.00135,
+          "attack_records_in_buffer": 162,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9471102356910706,
+          "accepted": true
+        },
+        {
+          "interval": 89,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.00013333333333333334,
+          "attack_records_in_buffer": 16,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9415077567100525,
+          "accepted": true
+        },
+        {
+          "interval": 92,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.939619243144989,
+          "accepted": true
+        },
+        {
+          "interval": 95,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9395978450775146,
+          "accepted": true
+        },
+        {
+          "interval": 98,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9394758343696594,
+          "accepted": true
+        },
+        {
+          "interval": 101,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9361705183982849,
+          "accepted": true
+        },
+        {
+          "interval": 104,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9350686073303223,
+          "accepted": true
+        },
+        {
+          "interval": 107,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9392316937446594,
+          "accepted": true
+        },
+        {
+          "interval": 110,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9403226375579834,
+          "accepted": true
+        },
+        {
+          "interval": 113,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9352421760559082,
+          "accepted": true
+        },
+        {
+          "interval": 116,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.934085488319397,
+          "accepted": true
+        },
+        {
+          "interval": 119,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9333112835884094,
+          "accepted": true
+        },
+        {
+          "interval": 122,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.16318333333333335,
+          "attack_records_in_buffer": 19582,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9461836814880371,
+          "accepted": true
+        },
+        {
+          "interval": 125,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.32729166666666665,
+          "attack_records_in_buffer": 39275,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9561237096786499,
+          "accepted": true
+        },
+        {
+          "interval": 128,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.33018333333333333,
+          "attack_records_in_buffer": 39622,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9572652578353882,
+          "accepted": true
+        },
+        {
+          "interval": 131,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.3344666666666667,
+          "attack_records_in_buffer": 40136,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9643096327781677,
+          "accepted": true
+        },
+        {
+          "interval": 134,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.17259166666666667,
+          "attack_records_in_buffer": 20711,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.957451343536377,
+          "accepted": true
+        },
+        {
+          "interval": 137,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.008758333333333333,
+          "attack_records_in_buffer": 1051,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9568695425987244,
+          "accepted": true
+        },
+        {
+          "interval": 140,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.005958333333333334,
+          "attack_records_in_buffer": 715,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9418068528175354,
+          "accepted": true
+        },
+        {
+          "interval": 143,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.00175,
+          "attack_records_in_buffer": 210,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9377536177635193,
+          "accepted": true
+        },
+        {
+          "interval": 146,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0005,
+          "attack_records_in_buffer": 60,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9310181736946106,
+          "accepted": true
+        },
+        {
+          "interval": 149,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.000225,
+          "attack_records_in_buffer": 27,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9308931827545166,
+          "accepted": true
+        },
+        {
+          "interval": 152,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0005583333333333333,
+          "attack_records_in_buffer": 67,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9227985739707947,
+          "accepted": true
+        },
+        {
+          "interval": 155,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0006416666666666667,
+          "attack_records_in_buffer": 77,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9266852736473083,
+          "accepted": true
+        },
+        {
+          "interval": 158,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.000725,
+          "attack_records_in_buffer": 87,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9250654578208923,
+          "accepted": true
+        },
+        {
+          "interval": 161,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0008416666666666667,
+          "attack_records_in_buffer": 101,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9206442832946777,
+          "accepted": true
+        },
+        {
+          "interval": 164,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.0004166666666666667,
+          "attack_records_in_buffer": 50,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9162228107452393,
+          "accepted": true
+        },
+        {
+          "interval": 167,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.023166666666666665,
+          "attack_records_in_buffer": 2780,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9193013906478882,
+          "accepted": true
+        },
+        {
+          "interval": 170,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.07315833333333334,
+          "attack_records_in_buffer": 8779,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9187251329421997,
+          "accepted": true
+        },
+        {
+          "interval": 173,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.081875,
+          "attack_records_in_buffer": 9825,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9231142401695251,
+          "accepted": true
+        },
+        {
+          "interval": 176,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.15535833333333332,
+          "attack_records_in_buffer": 18643,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.927470326423645,
+          "accepted": true
+        },
+        {
+          "interval": 179,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.13245,
+          "attack_records_in_buffer": 15894,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9286635518074036,
+          "accepted": true
+        },
+        {
+          "interval": 182,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.14536666666666667,
+          "attack_records_in_buffer": 17444,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9191659092903137,
+          "accepted": true
+        },
+        {
+          "interval": 185,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.19844166666666666,
+          "attack_records_in_buffer": 23813,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9170907735824585,
+          "accepted": true
+        },
+        {
+          "interval": 188,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.181725,
+          "attack_records_in_buffer": 21807,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9128797650337219,
+          "accepted": true
+        },
+        {
+          "interval": 191,
+          "trigger": "periodic",
+          "trusted_records": 120000,
+          "trusted_attack_share": 0.239725,
+          "attack_records_in_buffer": 28767,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9164157509803772,
+          "accepted": true
+        }
+      ],
+      "drift_log": []
+    },
+    "B_drift_adaptive": {
+      "overall": {
+        "n": 9504036,
+        "attacks": 1158860,
+        "tp": 355861,
+        "fp": 579179,
+        "fn": 802999,
+        "tn": 7765997,
+        "precision": 0.3805837183436003,
+        "recall": 0.3070785081890824,
+        "f1": 0.339902574143942,
+        "fpr": 0.06940285022149323,
+        "flagged_share": 0.09838346571919551
+      },
+      "per_day": {
+        "2018-02-16": {
+          "n": 591870,
+          "attacks": 145254,
+          "tp": 38789,
+          "fp": 144312,
+          "fn": 106465,
+          "tn": 302304,
+          "precision": 0.21184482881032873,
+          "recall": 0.2670425599295028,
+          "f1": 0.23626258165704803,
+          "fpr": 0.32312321994733734,
+          "flagged_share": 0.3093601635494281
+        },
+        "2018-02-20": {
+          "n": 5432970,
+          "attacks": 575364,
+          "tp": 96517,
+          "fp": 269846,
+          "fn": 478847,
+          "tn": 4587760,
+          "precision": 0.26344636330633825,
+          "recall": 0.16774945947261213,
+          "f1": 0.20497872525689503,
+          "fpr": 0.05555123243836573,
+          "flagged_share": 0.06743328234832882
+        },
+        "2018-02-21": {
+          "n": 561354,
+          "attacks": 200590,
+          "tp": 74647,
+          "fp": 4795,
+          "fn": 125943,
+          "tn": 355969,
+          "precision": 0.9396414994587245,
+          "recall": 0.37213719527394185,
+          "f1": 0.5331319277796823,
+          "fpr": 0.013291237484893172,
+          "flagged_share": 0.1415185426664814
+        },
+        "2018-02-22": {
+          "n": 744193,
+          "attacks": 319,
+          "tp": 122,
+          "fp": 34531,
+          "fn": 197,
+          "tn": 709343,
+          "precision": 0.0035206187054511876,
+          "recall": 0.3824451410658307,
+          "f1": 0.00697701017957223,
+          "fpr": 0.0464204959442056,
+          "flagged_share": 0.04656453366263859
+        },
+        "2018-02-23": {
+          "n": 828043,
+          "attacks": 535,
+          "tp": 157,
+          "fp": 39847,
+          "fn": 378,
+          "tn": 787661,
+          "precision": 0.003924607539246075,
+          "recall": 0.29345794392523367,
+          "f1": 0.007745627667184686,
+          "fpr": 0.04815300879266424,
+          "flagged_share": 0.04831150073124222
+        },
+        "2018-02-28": {
+          "n": 377006,
+          "attacks": 43299,
+          "tp": 5609,
+          "fp": 37955,
+          "fn": 37690,
+          "tn": 295752,
+          "precision": 0.12875309888899092,
+          "recall": 0.1295410979468348,
+          "f1": 0.12914589641159066,
+          "fpr": 0.11373750026220607,
+          "flagged_share": 0.11555253762539588
+        },
+        "2018-03-01": {
+          "n": 211994,
+          "attacks": 49162,
+          "tp": 8434,
+          "fp": 13573,
+          "fn": 40728,
+          "tn": 149259,
+          "precision": 0.383241695824056,
+          "recall": 0.1715552662625605,
+          "f1": 0.23701330635529513,
+          "fpr": 0.08335585142969441,
+          "flagged_share": 0.10380954177948433
+        },
+        "2018-03-02": {
+          "n": 756606,
+          "attacks": 144337,
+          "tp": 131586,
+          "fp": 34320,
+          "fn": 12751,
+          "tn": 577949,
+          "precision": 0.7931358721203573,
+          "recall": 0.9116581333961493,
+          "f1": 0.8482769957742803,
+          "fpr": 0.056053793349001825,
+          "flagged_share": 0.2192766116049833
+        }
+      },
+      "per_type": {
+        "Benign": {
+          "n": 8345176,
+          "flagged_share": 0.06940285022149323
+        },
+        "DoS-SlowHTTPTest": {
+          "n": 55,
+          "flagged_share": 1.0
+        },
+        "DoS-Hulk": {
+          "n": 145199,
+          "flagged_share": 0.26676492262343404
+        },
+        "DDoS-LOIC-HTTP": {
+          "n": 575364,
+          "flagged_share": 0.16774945947261213
+        },
+        "DDoS-LOIC-UDP": {
+          "n": 1730,
+          "flagged_share": 1.0
+        },
+        "DDoS-HOIC": {
+          "n": 198860,
+          "flagged_share": 0.36667504777230214
+        },
+        "WebBruteForce": {
+          "n": 551,
+          "flagged_share": 0.24682395644283123
+        },
+        "SQLInjection": {
+          "n": 78,
+          "flagged_share": 0.4358974358974359
+        },
+        "WebXSS": {
+          "n": 225,
+          "flagged_share": 0.48444444444444446
+        },
+        "Infiltration": {
+          "n": 92461,
+          "flagged_share": 0.15188025221444718
+        },
+        "Bot": {
+          "n": 144337,
+          "flagged_share": 0.9116581333961493
+        }
+      },
+      "retrain_log": [
+        {
+          "interval": 3,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.2855333333333333,
+          "attack_records_in_buffer": 8566,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.473568081855774,
+          "accepted": true
+        },
+        {
+          "interval": 4,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.2653,
+          "attack_records_in_buffer": 7959,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.2272298336029053,
+          "accepted": true
+        },
+        {
+          "interval": 5,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.2369,
+          "attack_records_in_buffer": 7107,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.186341643333435,
+          "accepted": true
+        },
+        {
+          "interval": 14,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0218325853347778,
+          "accepted": true
+        },
+        {
+          "interval": 15,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0072848796844482,
+          "accepted": true
+        },
+        {
+          "interval": 16,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9990103840827942,
+          "accepted": true
+        },
+        {
+          "interval": 27,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9954774379730225,
+          "accepted": true
+        },
+        {
+          "interval": 28,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9911940693855286,
+          "accepted": true
+        },
+        {
+          "interval": 29,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9891735315322876,
+          "accepted": true
+        },
+        {
+          "interval": 35,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.4974,
+          "attack_records_in_buffer": 14922,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.021059274673462,
+          "accepted": true
+        },
+        {
+          "interval": 36,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.5101,
+          "attack_records_in_buffer": 15303,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.010330080986023,
+          "accepted": true
+        },
+        {
+          "interval": 37,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.4861333333333333,
+          "attack_records_in_buffer": 14584,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0081971883773804,
+          "accepted": true
+        },
+        {
+          "interval": 47,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.4961333333333333,
+          "attack_records_in_buffer": 14884,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0043967962265015,
+          "accepted": true
+        },
+        {
+          "interval": 48,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.47323333333333334,
+          "attack_records_in_buffer": 14197,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0008561611175537,
+          "accepted": true
+        },
+        {
+          "interval": 49,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.4777666666666667,
+          "attack_records_in_buffer": 14333,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.000914216041565,
+          "accepted": true
+        },
+        {
+          "interval": 58,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9919901490211487,
+          "accepted": true
+        },
+        {
+          "interval": 59,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9884103536605835,
+          "accepted": true
+        },
+        {
+          "interval": 60,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9880847334861755,
+          "accepted": true
+        },
+        {
+          "interval": 74,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9849748015403748,
+          "accepted": true
+        },
+        {
+          "interval": 75,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0014,
+          "attack_records_in_buffer": 42,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9990702271461487,
+          "accepted": true
+        },
+        {
+          "interval": 76,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0029666666666666665,
+          "attack_records_in_buffer": 89,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0085022449493408,
+          "accepted": true
+        },
+        {
+          "interval": 93,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9879471659660339,
+          "accepted": true
+        },
+        {
+          "interval": 94,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9856809973716736,
+          "accepted": true
+        },
+        {
+          "interval": 95,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9820320010185242,
+          "accepted": true
+        },
+        {
+          "interval": 122,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.6527333333333334,
+          "attack_records_in_buffer": 19582,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1303949356079102,
+          "accepted": true
+        },
+        {
+          "interval": 123,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.9860666666666666,
+          "attack_records_in_buffer": 29582,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.15096914768219,
+          "accepted": true
+        },
+        {
+          "interval": 124,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.9818,
+          "attack_records_in_buffer": 29454,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1372648477554321,
+          "accepted": true
+        },
+        {
+          "interval": 126,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.32926666666666665,
+          "attack_records_in_buffer": 9878,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1563166379928589,
+          "accepted": true
+        },
+        {
+          "interval": 127,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.017333333333333333,
+          "attack_records_in_buffer": 520,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1283003091812134,
+          "accepted": true
+        },
+        {
+          "interval": 128,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.011566666666666666,
+          "attack_records_in_buffer": 347,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1014875173568726,
+          "accepted": true
+        },
+        {
+          "interval": 130,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0147,
+          "attack_records_in_buffer": 441,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0978766679763794,
+          "accepted": true
+        },
+        {
+          "interval": 131,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.017133333333333334,
+          "attack_records_in_buffer": 514,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0872151851654053,
+          "accepted": true
+        },
+        {
+          "interval": 132,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.019466666666666667,
+          "attack_records_in_buffer": 584,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.078347086906433,
+          "accepted": true
+        },
+        {
+          "interval": 135,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0555756092071533,
+          "accepted": true
+        },
+        {
+          "interval": 136,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.00046666666666666666,
+          "attack_records_in_buffer": 14,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0264416933059692,
+          "accepted": true
+        },
+        {
+          "interval": 137,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0011,
+          "attack_records_in_buffer": 33,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0136749744415283,
+          "accepted": true
+        },
+        {
+          "interval": 139,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.001,
+          "attack_records_in_buffer": 30,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0081948041915894,
+          "accepted": true
+        },
+        {
+          "interval": 140,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.00036666666666666667,
+          "attack_records_in_buffer": 11,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0050158500671387,
+          "accepted": true
+        },
+        {
+          "interval": 141,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.001937985420227,
+          "accepted": true
+        },
+        {
+          "interval": 151,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.00036666666666666667,
+          "attack_records_in_buffer": 11,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.000798225402832,
+          "accepted": true
+        },
+        {
+          "interval": 152,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0017,
+          "attack_records_in_buffer": 51,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9993929862976074,
+          "accepted": true
+        },
+        {
+          "interval": 153,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0023333333333333335,
+          "attack_records_in_buffer": 70,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.011920690536499,
+          "accepted": true
+        },
+        {
+          "interval": 158,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0005666666666666667,
+          "attack_records_in_buffer": 17,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9930325150489807,
+          "accepted": true
+        },
+        {
+          "interval": 159,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0008666666666666666,
+          "attack_records_in_buffer": 26,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9937217235565186,
+          "accepted": true
+        },
+        {
+          "interval": 160,
+          "trigger": "drift",
+          "trusted_records": 30000,
+          "trusted_attack_share": 0.0008,
+          "attack_records_in_buffer": 24,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 0.9899044036865234,
+          "accepted": true
+        }
+      ],
+      "drift_log": [
+        {
+          "interval": 3,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 14,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 27,
+          "event": "alarm",
+          "monitors": [
+            "log_error"
+          ]
+        },
+        {
+          "interval": 35,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 47,
+          "event": "alarm",
+          "monitors": [
+            "totlen_fwd_pkts"
+          ]
+        },
+        {
+          "interval": 58,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 74,
+          "event": "alarm",
+          "monitors": [
+            "log_error"
+          ]
+        },
+        {
+          "interval": 93,
+          "event": "alarm",
+          "monitors": [
+            "flow_byts_s"
+          ]
+        },
+        {
+          "interval": 122,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share",
+            "flow_duration"
+          ]
+        },
+        {
+          "interval": 126,
+          "event": "alarm",
+          "monitors": [
+            "udp_share"
+          ]
+        },
+        {
+          "interval": 130,
+          "event": "alarm",
+          "monitors": [
+            "pkt_len_mean"
+          ]
+        },
+        {
+          "interval": 135,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 139,
+          "event": "alarm",
+          "monitors": [
+            "flow_duration"
+          ]
+        },
+        {
+          "interval": 151,
+          "event": "alarm",
+          "monitors": [
+            "flow_byts_s"
+          ]
+        },
+        {
+          "interval": 158,
+          "event": "alarm",
+          "monitors": [
+            "udp_share"
+          ]
+        }
+      ]
+    },
+    "C_drift_confirmed": {
+      "overall": {
+        "n": 9504036,
+        "attacks": 1158860,
+        "tp": 443818,
+        "fp": 769105,
+        "fn": 715042,
+        "tn": 7576071,
+        "precision": 0.36590781113063237,
+        "recall": 0.38297809916642217,
+        "f1": 0.3742484029947091,
+        "fpr": 0.09216162726825654,
+        "flagged_share": 0.12762188611238426
+      },
+      "per_day": {
+        "2018-02-16": {
+          "n": 591870,
+          "attacks": 145254,
+          "tp": 44544,
+          "fp": 179994,
+          "fn": 100710,
+          "tn": 266622,
+          "precision": 0.1983806749859712,
+          "recall": 0.3066628113511504,
+          "f1": 0.24091381100726897,
+          "fpr": 0.4030173571927562,
+          "flagged_share": 0.3793704698666937
+        },
+        "2018-02-20": {
+          "n": 5432970,
+          "attacks": 575364,
+          "tp": 121400,
+          "fp": 346444,
+          "fn": 453964,
+          "tn": 4511162,
+          "precision": 0.25948820547019946,
+          "recall": 0.21099686459354425,
+          "f1": 0.232743613929341,
+          "fpr": 0.0713199053196163,
+          "flagged_share": 0.08611201607960287
+        },
+        "2018-02-21": {
+          "n": 561354,
+          "attacks": 200590,
+          "tp": 119617,
+          "fp": 53787,
+          "fn": 80973,
+          "tn": 306977,
+          "precision": 0.6898168439021014,
+          "recall": 0.596325838775612,
+          "f1": 0.6396733637438033,
+          "fpr": 0.14909192713241898,
+          "flagged_share": 0.308903116393577
+        },
+        "2018-02-22": {
+          "n": 744193,
+          "attacks": 319,
+          "tp": 159,
+          "fp": 48174,
+          "fn": 160,
+          "tn": 695700,
+          "precision": 0.003289677859847309,
+          "recall": 0.49843260188087773,
+          "f1": 0.006536216393981748,
+          "fpr": 0.06476096758321974,
+          "flagged_share": 0.0649468619027591
+        },
+        "2018-02-23": {
+          "n": 828043,
+          "attacks": 535,
+          "tp": 319,
+          "fp": 49893,
+          "fn": 216,
+          "tn": 777615,
+          "precision": 0.006353063012825619,
+          "recall": 0.5962616822429907,
+          "f1": 0.01257217175399531,
+          "fpr": 0.06029307269536971,
+          "flagged_share": 0.060639362931635195
+        },
+        "2018-02-28": {
+          "n": 377006,
+          "attacks": 43299,
+          "tp": 5911,
+          "fp": 40864,
+          "fn": 37388,
+          "tn": 292843,
+          "precision": 0.12637092463923036,
+          "recall": 0.13651585486962747,
+          "f1": 0.13124764082865198,
+          "fpr": 0.12245472824963216,
+          "flagged_share": 0.12406964345395033
+        },
+        "2018-03-01": {
+          "n": 211994,
+          "attacks": 49162,
+          "tp": 8717,
+          "fp": 15541,
+          "fn": 40445,
+          "tn": 147291,
+          "precision": 0.35934537059938987,
+          "recall": 0.17731174484357837,
+          "f1": 0.237455734132389,
+          "fpr": 0.09544192787658445,
+          "flagged_share": 0.11442776682358935
+        },
+        "2018-03-02": {
+          "n": 756606,
+          "attacks": 144337,
+          "tp": 143151,
+          "fp": 34408,
+          "fn": 1186,
+          "tn": 577861,
+          "precision": 0.8062165252113382,
+          "recall": 0.9917831186736595,
+          "f1": 0.8894239133136169,
+          "fpr": 0.05619752102425568,
+          "flagged_share": 0.2346782869815994
+        }
+      },
+      "per_type": {
+        "Benign": {
+          "n": 8345176,
+          "flagged_share": 0.09216162726825654
+        },
+        "DoS-SlowHTTPTest": {
+          "n": 55,
+          "flagged_share": 1.0
+        },
+        "DoS-Hulk": {
+          "n": 145199,
+          "flagged_share": 0.306400181819434
+        },
+        "DDoS-LOIC-HTTP": {
+          "n": 575364,
+          "flagged_share": 0.21099686459354425
+        },
+        "DDoS-LOIC-UDP": {
+          "n": 1730,
+          "flagged_share": 1.0
+        },
+        "DDoS-HOIC": {
+          "n": 198860,
+          "flagged_share": 0.5928140400281605
+        },
+        "WebBruteForce": {
+          "n": 551,
+          "flagged_share": 0.5934664246823956
+        },
+        "SQLInjection": {
+          "n": 78,
+          "flagged_share": 0.48717948717948717
+        },
+        "WebXSS": {
+          "n": 225,
+          "flagged_share": 0.5022222222222222
+        },
+        "Infiltration": {
+          "n": 92461,
+          "flagged_share": 0.1582072441353652
+        },
+        "Bot": {
+          "n": 144337,
+          "flagged_share": 0.9917831186736595
+        }
+      },
+      "retrain_log": [
+        {
+          "interval": 4,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.3025,
+          "attack_records_in_buffer": 7260,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.4036351442337036,
+          "accepted": true
+        },
+        {
+          "interval": 5,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.26895833333333335,
+          "attack_records_in_buffer": 6455,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.2060940265655518,
+          "accepted": true
+        },
+        {
+          "interval": 6,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.252125,
+          "attack_records_in_buffer": 6051,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.163120985031128,
+          "accepted": true
+        },
+        {
+          "interval": 15,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0248875617980957,
+          "accepted": true
+        },
+        {
+          "interval": 16,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.007192850112915,
+          "accepted": true
+        },
+        {
+          "interval": 17,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.0,
+          "attack_records_in_buffer": 0,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0008772611618042,
+          "accepted": true
+        },
+        {
+          "interval": 36,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.39691666666666664,
+          "attack_records_in_buffer": 9526,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.0273090600967407,
+          "accepted": true
+        },
+        {
+          "interval": 37,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.368,
+          "attack_records_in_buffer": 8832,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.020910382270813,
+          "accepted": true
+        },
+        {
+          "interval": 38,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.36670833333333336,
+          "attack_records_in_buffer": 8801,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.022834062576294,
+          "accepted": true
+        },
+        {
+          "interval": 123,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.9884583333333333,
+          "attack_records_in_buffer": 23723,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1913695335388184,
+          "accepted": true
+        },
+        {
+          "interval": 124,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.9999583333333333,
+          "attack_records_in_buffer": 23999,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1635671854019165,
+          "accepted": true
+        },
+        {
+          "interval": 125,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.817625,
+          "attack_records_in_buffer": 19623,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1918063163757324,
+          "accepted": true
+        },
+        {
+          "interval": 131,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.021416666666666667,
+          "attack_records_in_buffer": 514,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1945334672927856,
+          "accepted": true
+        },
+        {
+          "interval": 132,
+          "trigger": "drift",
+          "trusted_records": 24000,
+          "trusted_attack_share": 0.024333333333333332,
+          "attack_records_in_buffer": 584,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.1653631925582886,
+          "accepted": true
+        },
+        {
+          "interval": 133,
+          "trigger": "drift",
+          "trusted_records": 24001,
+          "trusted_attack_share": 0.0122911545352277,
+          "attack_records_in_buffer": 295,
+          "triggered_by_release": false,
+          "anchor_error_ratio": 1.116814374923706,
+          "accepted": true
+        }
+      ],
+      "drift_log": [
+        {
+          "interval": 3,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 4,
+          "event": "confirmed",
+          "level": -2.226881265640259,
+          "reference": -4.608652114868164,
+          "flagged_share": 0.884
+        },
+        {
+          "interval": 14,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 15,
+          "event": "confirmed",
+          "level": -4.017004013061523,
+          "reference": -4.783449649810791,
+          "flagged_share": 0.0684
+        },
+        {
+          "interval": 27,
+          "event": "alarm",
+          "monitors": [
+            "log_error"
+          ]
+        },
+        {
+          "interval": 28,
+          "event": "cancelled",
+          "level": -4.549254894256592,
+          "reference": -4.53489351272583,
+          "flagged_share": 0.062
+        },
+        {
+          "interval": 35,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 36,
+          "event": "confirmed",
+          "level": -3.149852752685547,
+          "reference": -4.53489351272583,
+          "flagged_share": 0.5122
+        },
+        {
+          "interval": 47,
+          "event": "alarm",
+          "monitors": [
+            "totlen_fwd_pkts"
+          ]
+        },
+        {
+          "interval": 48,
+          "event": "cancelled",
+          "level": -4.594973564147949,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.0313
+        },
+        {
+          "interval": 49,
+          "event": "alarm",
+          "monitors": [
+            "pkt_len_mean"
+          ]
+        },
+        {
+          "interval": 50,
+          "event": "cancelled",
+          "level": -4.610443115234375,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.028
+        },
+        {
+          "interval": 58,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 59,
+          "event": "cancelled",
+          "level": -4.509117126464844,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.0691
+        },
+        {
+          "interval": 74,
+          "event": "alarm",
+          "monitors": [
+            "log_error"
+          ]
+        },
+        {
+          "interval": 75,
+          "event": "cancelled",
+          "level": -4.456324577331543,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.0694
+        },
+        {
+          "interval": 75,
+          "event": "alarm",
+          "monitors": [
+            "udp_share"
+          ]
+        },
+        {
+          "interval": 76,
+          "event": "cancelled",
+          "level": -4.496803283691406,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.0663
+        },
+        {
+          "interval": 93,
+          "event": "alarm",
+          "monitors": [
+            "flow_byts_s"
+          ]
+        },
+        {
+          "interval": 94,
+          "event": "cancelled",
+          "level": -4.450028419494629,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.0693
+        },
+        {
+          "interval": 122,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share",
+            "flow_duration"
+          ]
+        },
+        {
+          "interval": 123,
+          "event": "confirmed",
+          "level": -3.116830825805664,
+          "reference": -4.554460525512695,
+          "flagged_share": 0.9028
+        },
+        {
+          "interval": 126,
+          "event": "alarm",
+          "monitors": [
+            "udp_share"
+          ]
+        },
+        {
+          "interval": 127,
+          "event": "cancelled",
+          "level": -4.616416931152344,
+          "reference": -4.872366905212402,
+          "flagged_share": 0.0009
+        },
+        {
+          "interval": 127,
+          "event": "alarm",
+          "monitors": [
+            "flow_byts_s",
+            "log_error"
+          ]
+        },
+        {
+          "interval": 128,
+          "event": "cancelled",
+          "level": -4.616593360900879,
+          "reference": -4.872366905212402,
+          "flagged_share": 0.001
+        },
+        {
+          "interval": 130,
+          "event": "alarm",
+          "monitors": [
+            "pkt_len_mean"
+          ]
+        },
+        {
+          "interval": 131,
+          "event": "confirmed",
+          "level": -4.161623001098633,
+          "reference": -4.872366905212402,
+          "flagged_share": 0.0005
+        },
+        {
+          "interval": 135,
+          "event": "alarm",
+          "monitors": [
+            "flagged_share"
+          ]
+        },
+        {
+          "interval": 136,
+          "event": "cancelled",
+          "level": -4.3255615234375,
+          "reference": -4.7832841873168945,
+          "flagged_share": 0.0578
+        },
+        {
+          "interval": 139,
+          "event": "alarm",
+          "monitors": [
+            "flow_duration"
+          ]
+        },
+        {
+          "interval": 140,
+          "event": "cancelled",
+          "level": -4.3352274894714355,
+          "reference": -4.7832841873168945,
+          "flagged_share": 0.082
+        },
+        {
+          "interval": 151,
+          "event": "alarm",
+          "monitors": [
+            "flow_byts_s"
+          ]
+        },
+        {
+          "interval": 152,
+          "event": "cancelled",
+          "level": -4.34632682800293,
+          "reference": -4.7832841873168945,
+          "flagged_share": 0.0969
+        },
+        {
+          "interval": 158,
+          "event": "alarm",
+          "monitors": [
+            "udp_share"
+          ]
+        },
+        {
+          "interval": 159,
+          "event": "cancelled",
+          "level": -4.448419570922852,
+          "reference": -4.7832841873168945,
+          "flagged_share": 0.041
+        }
+      ]
+    }
+  },
+  "alarms": [
+    {
+      "interval": 3,
+      "batch": 38,
+      "record": 190000,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 14,
+      "batch": 144,
+      "record": 716870,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 27,
+      "batch": 272,
+      "record": 1356870,
+      "monitors": [
+        "log_error"
+      ]
+    },
+    {
+      "interval": 35,
+      "batch": 353,
+      "record": 1761870,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 47,
+      "batch": 478,
+      "record": 2386870,
+      "monitors": [
+        "totlen_fwd_pkts"
+      ]
+    },
+    {
+      "interval": 49,
+      "batch": 493,
+      "record": 2461870,
+      "monitors": [
+        "pkt_len_mean"
+      ]
+    },
+    {
+      "interval": 58,
+      "batch": 587,
+      "record": 2931870,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 74,
+      "batch": 745,
+      "record": 3721870,
+      "monitors": [
+        "log_error"
+      ]
+    },
+    {
+      "interval": 75,
+      "batch": 756,
+      "record": 3776870,
+      "monitors": [
+        "udp_share"
+      ]
+    },
+    {
+      "interval": 93,
+      "batch": 931,
+      "record": 4651870,
+      "monitors": [
+        "flow_byts_s"
+      ]
+    },
+    {
+      "interval": 122,
+      "batch": 1217,
+      "record": 6079840,
+      "monitors": [
+        "flow_duration"
+      ]
+    },
+    {
+      "interval": 122,
+      "batch": 1223,
+      "record": 6109840,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 126,
+      "batch": 1257,
+      "record": 6279840,
+      "monitors": [
+        "udp_share"
+      ]
+    },
+    {
+      "interval": 127,
+      "batch": 1267,
+      "record": 6329840,
+      "monitors": [
+        "flow_byts_s"
+      ]
+    },
+    {
+      "interval": 127,
+      "batch": 1271,
+      "record": 6349840,
+      "monitors": [
+        "log_error"
+      ]
+    },
+    {
+      "interval": 130,
+      "batch": 1297,
+      "record": 6479840,
+      "monitors": [
+        "pkt_len_mean"
+      ]
+    },
+    {
+      "interval": 135,
+      "batch": 1341,
+      "record": 6696194,
+      "monitors": [
+        "flagged_share"
+      ]
+    },
+    {
+      "interval": 139,
+      "batch": 1388,
+      "record": 6931194,
+      "monitors": [
+        "flow_duration"
+      ]
+    },
+    {
+      "interval": 151,
+      "batch": 1504,
+      "record": 7510387,
+      "monitors": [
+        "flow_byts_s"
+      ]
+    },
+    {
+      "interval": 158,
+      "batch": 1571,
+      "record": 7845387,
+      "monitors": [
+        "udp_share"
+      ]
+    }
+  ],
+  "monitor_names": [
+    "log_error",
+    "flagged_share",
+    "flow_duration",
+    "tot_fwd_pkts",
+    "totlen_fwd_pkts",
+    "flow_byts_s",
+    "pkt_len_mean",
+    "udp_share"
+  ],
+  "auc_per_day": {
+    "static": {
+      "2018-02-16": {
+        "roc_auc": 0.07944584029779417,
+        "pr_auc": 0.17107177799161344
+      },
+      "2018-02-20": {
+        "roc_auc": 0.9484981013104806,
+        "pr_auc": 0.6086864841156101
+      },
+      "2018-02-21": {
+        "roc_auc": 0.012915704566794663,
+        "pr_auc": 0.21392071907805624
+      },
+      "2018-02-22": {
+        "roc_auc": 0.8664370958161814,
+        "pr_auc": 0.002892024016812659
+      },
+      "2018-02-23": {
+        "roc_auc": 0.8683098515037085,
+        "pr_auc": 0.004780926319955292
+      },
+      "2018-02-28": {
+        "roc_auc": 0.49339832409124823,
+        "pr_auc": 0.11526544182574203
+      },
+      "2018-03-01": {
+        "roc_auc": 0.5332739572036809,
+        "pr_auc": 0.2786341439422632
+      },
+      "2018-03-02": {
+        "roc_auc": 0.9305687664787315,
+        "pr_auc": 0.5670057359722596
+      }
+    },
+    "A2_periodic": {
+      "2018-02-16": {
+        "roc_auc": 0.47297604505402757,
+        "pr_auc": 0.2524138881649722
+      },
+      "2018-02-20": {
+        "roc_auc": 0.41601207702790033,
+        "pr_auc": 0.09043659256105459
+      },
+      "2018-02-21": {
+        "roc_auc": 0.7286279252759116,
+        "pr_auc": 0.5237191208939159
+      },
+      "2018-02-22": {
+        "roc_auc": 0.8577142741410271,
+        "pr_auc": 0.07908356873231787
+      },
+      "2018-02-23": {
+        "roc_auc": 0.8343475280065057,
+        "pr_auc": 0.0027612355856096267
+      },
+      "2018-02-28": {
+        "roc_auc": 0.49400261868559947,
+        "pr_auc": 0.1147744078518309
+      },
+      "2018-03-01": {
+        "roc_auc": 0.5384416250324187,
+        "pr_auc": 0.2770571583609126
+      },
+      "2018-03-02": {
+        "roc_auc": 0.5404334444938595,
+        "pr_auc": 0.23240960850990483
+      }
+    },
+    "B_drift_adaptive": {
+      "2018-02-16": {
+        "roc_auc": 0.4799175456203537,
+        "pr_auc": 0.2443270636826254
+      },
+      "2018-02-20": {
+        "roc_auc": 0.46533675855932366,
+        "pr_auc": 0.12431131678520002
+      },
+      "2018-02-21": {
+        "roc_auc": 0.6975325060629636,
+        "pr_auc": 0.6111411146363444
+      },
+      "2018-02-22": {
+        "roc_auc": 0.8703178512982231,
+        "pr_auc": 0.002640713091497584
+      },
+      "2018-02-23": {
+        "roc_auc": 0.8681275588876481,
+        "pr_auc": 0.0034557552737527206
+      },
+      "2018-02-28": {
+        "roc_auc": 0.49135196635730494,
+        "pr_auc": 0.11545766408977244
+      },
+      "2018-03-01": {
+        "roc_auc": 0.5403707946550003,
+        "pr_auc": 0.28630061329721784
+      },
+      "2018-03-02": {
+        "roc_auc": 0.9453983922495263,
+        "pr_auc": 0.6220122958904573
+      }
+    },
+    "C_drift_confirmed": {
+      "2018-02-16": {
+        "roc_auc": 0.460517495036744,
+        "pr_auc": 0.24027426328140544
+      },
+      "2018-02-20": {
+        "roc_auc": 0.5458902520889095,
+        "pr_auc": 0.15546493049111643
+      },
+      "2018-02-21": {
+        "roc_auc": 0.6119294972260124,
+        "pr_auc": 0.44787082969259673
+      },
+      "2018-02-22": {
+        "roc_auc": 0.8150595295392621,
+        "pr_auc": 0.17949782549308607
+      },
+      "2018-02-23": {
+        "roc_auc": 0.8292587882031487,
+        "pr_auc": 0.1439833804852356
+      },
+      "2018-02-28": {
+        "roc_auc": 0.4871701328180748,
+        "pr_auc": 0.11415589339210111
+      },
+      "2018-03-01": {
+        "roc_auc": 0.538415158247272,
+        "pr_auc": 0.28049320544262196
+      },
+      "2018-03-02": {
+        "roc_auc": 0.9528514498227572,
+        "pr_auc": 0.6562965368440815
+      }
+    }
+  },
+  "alarm_attack_share": [
+    0.2986,
+    0.0,
+    0.0,
+    0.5604,
+    0.5628,
+    0.5324,
+    0.0,
+    0.0,
+    0.0066,
+    0.0,
+    1.0,
+    1.0,
+    0.0396,
+    0.01,
+    0.0088,
+    0.0228,
+    0.0,
+    0.0,
+    0.0,
+    0.0016
+  ],
+  "intervals": {
+    "ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      100000,
+      100001,
+      100002,
+      100003,
+      100004,
+      100005,
+      100006,
+      100007,
+      100008,
+      100009,
+      100010,
+      100011,
+      100012,
+      100013,
+      100014,
+      100015,
+      100016,
+      100017,
+      100018,
+      100019,
+      100020,
+      100021,
+      100022,
+      100023,
+      100024,
+      100025,
+      100026,
+      100027,
+      100028,
+      100029,
+      100030,
+      100031,
+      100032,
+      100033,
+      100034,
+      100035,
+      100036,
+      100037,
+      100038,
+      100039,
+      100040,
+      100041,
+      100042,
+      100043,
+      100044,
+      100045,
+      100046,
+      100047,
+      100048,
+      100049,
+      100050,
+      100051,
+      100052,
+      100053,
+      100054,
+      100055,
+      100056,
+      100057,
+      100058,
+      100059,
+      100060,
+      100061,
+      100062,
+      100063,
+      100064,
+      100065,
+      100066,
+      100067,
+      100068,
+      100069,
+      100070,
+      100071,
+      100072,
+      100073,
+      100074,
+      100075,
+      100076,
+      100077,
+      100078,
+      100079,
+      100080,
+      100081,
+      100082,
+      100083,
+      100084,
+      100085,
+      100086,
+      100087,
+      100088,
+      100089,
+      100090,
+      100091,
+      100092,
+      100093,
+      100094,
+      100095,
+      100096,
+      100097,
+      100098,
+      100099,
+      100100,
+      100101,
+      100102,
+      100103,
+      100104,
+      100105,
+      100106,
+      100107,
+      100108,
+      200000,
+      200001,
+      200002,
+      200003,
+      200004,
+      200005,
+      200006,
+      200007,
+      200008,
+      200009,
+      200010,
+      200011,
+      300000,
+      300001,
+      300002,
+      300003,
+      300004,
+      300005,
+      300006,
+      300007,
+      300008,
+      300009,
+      300010,
+      300011,
+      300012,
+      300013,
+      300014,
+      400000,
+      400001,
+      400002,
+      400003,
+      400004,
+      400005,
+      400006,
+      400007,
+      400008,
+      400009,
+      400010,
+      400011,
+      400012,
+      400013,
+      400014,
+      400015,
+      400016,
+      500000,
+      500001,
+      500002,
+      500003,
+      500004,
+      500005,
+      500006,
+      500007,
+      600000,
+      600001,
+      600002,
+      600003,
+      600004,
+      700000,
+      700001,
+      700002,
+      700003,
+      700004,
+      700005,
+      700006,
+      700007,
+      700008,
+      700009,
+      700010,
+      700011,
+      700012,
+      700013,
+      700014,
+      700015
+    ],
+    "days": [
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-16",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-20",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-21",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-22",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-23",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-02-28",
+      "2018-03-01",
+      "2018-03-01",
+      "2018-03-01",
+      "2018-03-01",
+      "2018-03-01",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02",
+      "2018-03-02"
+    ],
+    "n_per_interval": [
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      41870,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      32970,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      11354,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      44193,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      28043,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      27006,
+      50000,
+      50000,
+      50000,
+      50000,
+      11994,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      50000,
+      6606
+    ]
+  }
+}

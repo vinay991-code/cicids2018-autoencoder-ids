@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autoencoder IDS Dashboard</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#16202b; --muted:#5b6876; --line:#dfe3e8; --accent:#0b5cad; --warn-bg:#fff4e0; --warn-ink:#7a4b00;
+    --good:#0a7d4f; --bad:#b3261e; --grid:#e8ebef;
+    --c-truth:#6b7785; --c-unsup_mixed:#E69F00; --c-normal_only:#009E73; --c-supervised:#0072B2; --c-supervised_recon:#56B4E9; --c-hybrid:#CC79A7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10151b; --card:#171e26; --ink:#e7ecf1; --muted:#9aa7b5; --line:#2a3440; --accent:#6ab0ff; --warn-bg:#3a2d12; --warn-ink:#ffd58a;
+      --good:#4cd29a; --bad:#ff8a80; --grid:#222b35; --c-truth:#97a3b0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10151b; --card:#171e26; --ink:#e7ecf1; --muted:#9aa7b5; --line:#2a3440; --accent:#6ab0ff; --warn-bg:#3a2d12; --warn-ink:#ffd58a;
+    --good:#4cd29a; --bad:#ff8a80; --grid:#222b35; --c-truth:#97a3b0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .wrap{max-width:1180px;margin:0 auto;padding:16px}
+  header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:12px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:16px;margin:0 0 8px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--muted)}
+  .chip.ok{color:var(--good);border-color:var(--good)} .chip.off{color:var(--muted)}
+  nav{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px;flex-wrap:wrap}
+  nav button{background:none;border:0;color:var(--muted);padding:9px 14px;font:inherit;cursor:pointer;border-bottom:3px solid transparent}
+  nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+  .note{background:var(--warn-bg);color:var(--warn-ink);border-radius:8px;padding:9px 12px;font-size:13.5px;margin-bottom:12px}
+  .muted{color:var(--muted);font-size:13px}
+  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  th{font-weight:600;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  .controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;margin-bottom:10px}
+  label{display:flex;flex-direction:column;font-size:12.5px;color:var(--muted);gap:2px}
+  label{min-width:0;max-width:100%} input[type=file]{max-width:100%;font-size:13px}
+  select,input[type=number],input[type=range]{font:inherit;padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+  button.act{font:inherit;padding:7px 14px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+  button.act.sec{background:transparent;color:var(--accent)}
+  button.act:disabled{opacity:.5;cursor:default}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+  .kpi{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+  .kpi b{display:block;font-size:20px}
+  canvas{width:100%;height:260px;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 0 0}
+  .legend label{flex-direction:row;align-items:center;gap:6px;color:var(--ink);font-size:13px;cursor:pointer}
+  .sw{width:14px;height:4px;border-radius:2px;display:inline-block}
+  img.fig{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:12px;border:1px solid var(--line);margin-right:4px}
+  .tag.atk{border-color:var(--bad);color:var(--bad)} .tag.ben{border-color:var(--good);color:var(--good)}
+  .hidden{display:none}
+  .tabs-hint{font-size:12.5px;color:var(--muted)}
+  @media (max-width:520px){.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Autoencoder intrusion detection: results and replay</h1>
+    <div class="muted">Supervised vs unsupervised autoencoders on CSE-CIC-IDS2018 (reference run, seed 42)</div>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+
+<nav role="tablist" id="tabs">
+  <button role="tab" aria-selected="true" data-tab="results">Results</button>
+  <button role="tab" aria-selected="false" data-tab="replay">Live replay</button>
+  <button role="tab" aria-selected="false" data-tab="pcap">Wireshark / PCAP</button>
+  <button role="tab" aria-selected="false" data-tab="capture">Live capture</button>
+  <button role="tab" aria-selected="false" data-tab="models">Models and thresholds</button>
+</nav>
+
+<!-- ============ RESULTS ============ -->
+<section id="tab-results">
+  <div class="note">Every number on this tab is read from the experiment output files when the page loads. Nothing is typed in by hand. Threshold-dependent values vary between seeds and machines; ROC-AUC is the steadier evidence.</div>
+  <div class="card">
+    <h2>Table 1: detectors on attack types seen in training (reference run, 2,163,852 test records)</h2>
+    <div class="scroll"><table id="t1"></table></div>
+  </div>
+  <div class="card">
+    <h2>Over several training seeds <span class="muted" id="seedn"></span></h2>
+    <div class="controls">
+      <label>Experiment
+        <select id="seedset"><option value="seen">Seen attack types (Table 1c)</option><option value="unseen">Four attack types withheld (Table 5c)</option></select>
+      </label>
+    </div>
+    <div class="scroll"><table id="t2"></table></div>
+    <div class="muted" style="margin-top:6px">Mean, 95% t-interval of the mean (cut to 0 and 1) and the smallest and largest single seed. With so few seeds the intervals are wide.</div>
+  </div>
+  <div class="card hidden" id="trimcard"><h2>Trimmed-loss autoencoder (existing idea, evaluated here)</h2><div class="scroll"><table id="t3"></table></div></div>
+  <div class="card"><h2>Figures</h2><div class="grid g2" id="figs"></div></div>
+</section>
+
+<!-- ============ REPLAY ============ -->
+<section id="tab-replay" class="hidden">
+  <div class="note">The held-out test records are replayed in time order through the saved models, which are static: they are never updated. True labels appear only so the alerts can be compared with the truth; they never influence an alert.</div>
+  <div class="card">
+    <div class="controls">
+      <label>Day of the test partition <select id="day"></select></label>
+      <label>Start at (% of the day) <input type="number" id="startpct" value="0" min="0" max="99" step="1" style="width:90px"></label>
+      <label>Records per tick <select id="batch"><option>200</option><option selected>500</option><option>1000</option><option>2000</option></select></label>
+      <label>Seconds per tick <select id="interval"><option>0.2</option><option selected>0.5</option><option>1</option><option>2</option></select></label>
+      <button class="act" id="rstart">Start replay</button>
+      <button class="act sec" id="rstop" disabled>Stop</button>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <h2>Share of each batch flagged</h2>
+    <canvas id="chart"></canvas>
+    <div class="legend" id="legend"></div>
+    <div class="muted" id="chartmsg"></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h2>Cumulative result against the truth (evaluation only)</h2><div class="scroll"><table id="cum"></table></div></div>
+    <div class="card"><h2>Latest flagged records</h2><div class="scroll"><table id="feed"></table></div></div>
+  </div>
+</section>
+
+<!-- ============ WIRESHARK / PCAP ============ -->
+<section id="tab-pcap" class="hidden">
+  <div class="note"><b>Flow features follow CICFlowMeter.</b> Packets are turned into the 68 flow features by a port of the flow logic of CICFlowMeter, the tool that made the training data (including its quirks). <span class="fvsum">Check results load here.</span> A flag is still a lead to inspect in Wireshark, not a verdict: the models were trained on one 2018 lab network and detection of real attacks on other networks was not measured. The column "Out of range" counts features outside the training range: ordinary test flows almost never have any, so a flow with several is unlike the training data. Only IPv4 packets are used (TCP, UDP, and other IP protocols as protocol 0, like the training data). The uploaded file is deleted from disk once read; results stay in memory on this computer.</div>
+  <div class="card">
+    <h2>1. Analyse a capture saved from Wireshark</h2>
+    <div class="muted">Wireshark: File &gt; Save As &gt; pcap or pcapng, then choose the file here.</div>
+    <div class="controls" style="margin-top:8px">
+      <label>Capture file (.pcap, .pcapng) <input type="file" id="pfile" accept=".pcap,.pcapng,.cap"></label>
+      <button class="act" id="pgo">Analyse</button>
+      <button class="act sec" id="pdemo" title="Made-up traffic, only to try the page">Try the demo capture</button>
+      <button class="act sec" id="pcsv" disabled>Download CSV</button>
+      <span id="pstatus" class="muted"></span>
+    </div>
+    <div class="kpis" id="pkpis"></div>
+  </div>
+  <div class="card hidden" id="pres">
+    <h2>Flows (flagged first)</h2>
+    <div class="controls"><button class="act sec" id="pcopyall" disabled>Copy Wireshark filter for all flagged flows</button><span class="muted" id="pnote"></span></div>
+    <div class="scroll"><table id="ptable"></table></div>
+  </div>
+  <div class="card">
+    <h2>2. Live from Wireshark's command-line tool (tshark)</h2>
+    <div class="muted" id="pinfo">Checking for tshark ...</div>
+    <pre id="pcmd" style="white-space:pre-wrap;overflow-x:auto;background:var(--bg);padding:8px;border-radius:6px;font-size:12.5px"></pre>
+    <div class="muted">Live capture needs Npcap (installed with Wireshark) and capture rights, on a network you own or may monitor. Flagged flows are printed with a display filter you can paste into Wireshark.</div>
+  </div>
+</section>
+
+<!-- ============ CAPTURE ============ -->
+<section id="tab-capture" class="hidden">
+  <div class="note"><b>Same flow rules as the training data.</b> Live packets are turned into flow features by the same port of CICFlowMeter's flow logic as the PCAP tab. <span class="fvsum">Check results load here.</span> A flag is a lead to inspect in Wireshark, not a verdict. A flow appears when a FIN packet ends it or when it is 2 minutes old; a flow of a single packet is never reported (as in the original tool). Capture only on a network you own or may monitor. Needs Npcap, and the server must be started with <code>ENABLE_CAPTURE=1</code> (<code>start_app_capture.bat</code> does that). Addresses are shown here and stay in memory on this computer. While capturing, a headers-only copy (first 96 bytes of each packet, almost never payload) can be saved to the <code>captures</code> folder so you can open it in Wireshark and paste the filters below.</div>
+  <div class="card">
+    <div class="controls">
+      <label>Interface <select id="ciface" style="max-width:360px"><option value="">(loading ...)</option></select></label>
+      <label style="flex-direction:row;align-items:center;gap:6px;color:var(--ink)"><input type="checkbox" id="csave" checked> save headers-only pcap for Wireshark</label>
+      <button class="act" id="cstart">Start capture</button><button class="act sec" id="cstop" disabled>Stop</button>
+    </div>
+    <div class="muted" id="cstatus">not started</div>
+    <div class="kpis" id="ckpis" style="margin-top:10px"></div>
+  </div>
+  <div class="card">
+    <h2>Flows as they finish (newest first)</h2>
+    <div class="muted" style="margin-bottom:6px">A flow appears when a FIN packet ends it or when it is 2 minutes old (the original tool's flow timeout), so short sessions show up quickly and long ones later.</div>
+    <div class="scroll"><table id="cfeed"></table></div>
+  </div>
+</section>
+
+<!-- ============ MODELS ============ -->
+<section id="tab-models" class="hidden">
+  <div class="card"><h2>Models and the rule that set each threshold</h2><div class="scroll"><table id="mt"></table></div>
+  <div class="muted" style="margin-top:8px">Reconstruction errors are not calibrated probabilities. Thresholds were fixed from validation data (or 0.5) before the test set was scored.</div></div>
+  <div class="card"><h2>Scoring API</h2>
+    <div class="muted">POST /api/score with {"rows":[{ "flow_duration":…, …68 feature names…, "protocol":6 }]} returns the scores and which detectors alert. Interactive documentation: <a href="/docs">/docs</a>.</div></div>
+</section>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const NAMES = {unsup_mixed:"Unsupervised AE", normal_only:"One-class AE", supervised:"Supervised AE", supervised_recon:"Supervised AE + decoder", hybrid:"Supervised OR unsupervised"};
+const KEYS = Object.keys(NAMES);
+const SHORT = {unsup_mixed:"Unsup", normal_only:"One-class", supervised:"Sup", supervised_recon:"Sup+dec", hybrid:"Hybrid"};
+const fmt = (x,d=3)=> (x===null||x===undefined||Number.isNaN(x)) ? "n/a" : Number(x).toFixed(d);
+const pct = x => (x===null||x===undefined||!isFinite(x)) ? "n/a" : (100*x).toFixed(2)+"%";
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const getJSON = async (u,o) => { const r = await fetch(u,o); if(!r.ok){ let m=r.statusText; try{ m=(await r.json()).detail||m }catch(e){} throw new Error(m);} return r.json(); };
+
+/* ---- tabs ---- */
+document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-selected", x===b));
+  document.querySelectorAll("section[id^=tab-]").forEach(s=>s.classList.toggle("hidden", s.id!=="tab-"+b.dataset.tab));
+  if(b.dataset.tab==="replay") drawChart();
+}));
+
+/* ---- health chips ---- */
+getJSON("/api/health").then(h=>{
+  const c=(t,ok)=>`<span class="chip ${ok?'ok':'off'}">${t}</span>`;
+  $("#chips").innerHTML = c("API ok",true)+c(h.replay_data_available?"replay data found":"replay data missing",h.replay_data_available)+c(h.capture_enabled?"capture enabled":"capture off",h.capture_enabled);
+  window.HEALTH=h; if(!h.replay_data_available){ $("#rstart").disabled=true; $("#chartmsg").textContent="Replay needs data/processed/X_test.npy and meta_test.pkl (large files, not in the Docker image)."; }
+}).catch(e=>{ $("#chips").innerHTML='<span class="chip off">API unreachable</span>'; });
+
+/* ---- results ---- */
+let RES=null;
+function table(el, head, rows){ el.innerHTML = "<thead><tr>"+head.map(h=>`<th>${esc(h)}</th>`).join("")+"</tr></thead><tbody>"+rows.map(r=>"<tr>"+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+"</tbody>"; }
+function renderSeeds(){
+  if(!RES||!RES.seeds){ $("#t2").innerHTML="<tr><td>No multi-seed file found (seeds/seeds_summary.json).</td></tr>"; return; }
+  const set=$("#seedset").value, M=RES.seeds.metrics;
+  $("#seedn").textContent="(seeds "+RES.seeds.seeds.join(", ")+")";
+  const models=["unsup_mixed","normal_only","supervised"].concat(set==="seen"?["supervised_recon"]:[]);
+  const metrics=[...new Set(Object.keys(M).filter(k=>k.startsWith(set+"|")).map(k=>k.split("|").slice(2).join("|")))];
+  const head=["Metric"].concat(models.map(m=>NAMES[m]));
+  const rows=metrics.map(me=>[esc(me)].concat(models.map(m=>{ const s=M[set+"|"+m+"|"+me]; if(!s) return "–";
+     return `${fmt(s.mean)} <span class="muted">[${fmt(s.ci95[0])}, ${fmt(s.ci95[1])}]<br>${fmt(s.min)} to ${fmt(s.max)}</span>`; })));
+  table($("#t2"),head,rows);
+}
+getJSON("/api/results").then(r=>{
+  RES=r;
+  const t=r.table1_run_a, M=[["accuracy","Accuracy"],["precision","Precision"],["recall","Recall"],["f1","F1-score"],["fpr","False-positive rate"],["roc_auc","ROC-AUC"],["pr_auc","PR-AUC"]];
+  table($("#t1"),["Metric"].concat(["unsup_mixed","normal_only","supervised","supervised_recon"].map(m=>NAMES[m])),
+    M.map(([k,n])=>[n].concat(["unsup_mixed","normal_only","supervised","supervised_recon"].map(m=>fmt(t[m][k],4)))));
+  renderSeeds();
+  $("#figs").innerHTML = r.figures.map(f=>`<div><img class="fig" loading="lazy" src="/figures/${f}" alt="${f}"><div class="muted">${f.replace(/_/g," ").replace(".png","")}</div></div>`).join("");
+  if(r.trimmed){ $("#trimcard").classList.remove("hidden");
+    const rows=[]; for(const [m,d] of Object.entries(r.trimmed.methods)) for(const [k,s] of Object.entries(d)) rows.push([esc(m),esc(k),fmt(s.mean),`[${fmt(s.ci95[0])}, ${fmt(s.ci95[1])}]`]);
+    table($("#t3"),["Method","Metric","Mean","95% interval"],rows); }
+}).catch(e=>{ $("#t1").innerHTML="<tr><td>Could not load results: "+esc(e.message)+"</td></tr>"; });
+$("#seedset").addEventListener("change",renderSeeds);
+
+/* ---- models tab ---- */
+getJSON("/api/models").then(m=>{
+  table($("#mt"),["Detector","Threshold","Rule"], m.models.map(x=>[esc(x.label), x.threshold===null?"–":(x.threshold<0.01?x.threshold.toExponential(3):fmt(x.threshold,4)), `<span style="white-space:normal">${esc(x.rule)}</span>`]));
+}).catch(()=>{});
+
+/* ---- charts (canvas, no external library) ---- */
+const SERIES = ["truth"].concat(KEYS.filter(k=>k!=="supervised_recon"));
+const color = k => getComputedStyle(document.documentElement).getPropertyValue("--c-"+k).trim();
+const visible = {}; SERIES.forEach(k=>visible[k]=true);
+$("#legend").innerHTML = SERIES.map(k=>`<label><input type="checkbox" data-k="${k}" checked><span class="sw" style="background:var(--c-${k})"></span>${k==="truth"?"True attack share (evaluation only)":NAMES[k]}</label>`).join("");
+$("#legend").addEventListener("change",e=>{ visible[e.target.dataset.k]=e.target.checked; drawChart(); });
+let data=[];                      // per tick: {truth, ...model share}
+function drawChart(){
+  const cv=$("#chart"), dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight; if(!W) return;
+  cv.width=W*dpr; cv.height=H*dpr; const g=cv.getContext("2d"); g.scale(dpr,dpr); g.clearRect(0,0,W,H);
+  const L=44,R=10,T=8,B=22, w=W-L-R, h=H-T-B, grid=getComputedStyle(document.documentElement).getPropertyValue("--grid").trim(), ink=getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+  g.font="11px system-ui"; g.fillStyle=ink; g.strokeStyle=grid; g.lineWidth=1;
+  for(let i=0;i<=4;i++){ const y=T+h*i/4; g.beginPath(); g.moveTo(L,y); g.lineTo(W-R,y); g.stroke(); g.fillText((100*(1-i/4)).toFixed(0)+"%",4,y+4); }
+  g.fillText(data.length?("tick 1 to "+data.length):"waiting for data",L,H-6);
+  if(!data.length) return;
+  const n=Math.max(data.length,2);
+  for(const k of SERIES){ if(!visible[k]) continue;
+    g.strokeStyle=color(k); g.lineWidth=k==="truth"?1.6:2; g.setLineDash(k==="truth"?[5,4]:[]); g.beginPath();
+    data.forEach((d,i)=>{ const x=L+w*i/(n-1), y=T+h*(1-Math.min(1,d[k])); i?g.lineTo(x,y):g.moveTo(x,y); }); g.stroke(); }
+  g.setLineDash([]);
+}
+window.addEventListener("resize",drawChart);
+
+/* ---- replay ---- */
+let es=null, cum={}, total={n:0,atk:0}, feedRows=[];
+function resetReplay(){ data=[]; cum={}; KEYS.forEach(k=>cum[k]={tp:0,fp:0,fn:0,tn:0}); total={n:0,atk:0}; feedRows=[]; renderCum(); renderKpis(); renderFeed(); drawChart(); }
+function renderKpis(){ $("#kpis").innerHTML=[["Records scored",total.n.toLocaleString()],["True attacks (truth)",total.atk.toLocaleString()+" ("+pct(total.n?total.atk/total.n:NaN)+")"],
+   ["Flagged by supervised",(cum.supervised?cum.supervised.tp+cum.supervised.fp:0).toLocaleString()],["Flagged by unsupervised",(cum.unsup_mixed?cum.unsup_mixed.tp+cum.unsup_mixed.fp:0).toLocaleString()]].map(([a,b])=>`<div class="kpi">${a}<b>${b}</b></div>`).join(""); }
+function renderCum(){ table($("#cum"),["Detector","Flagged","Recall","Precision","False-positive rate"], KEYS.map(k=>{ const c=cum[k]||{tp:0,fp:0,fn:0,tn:0};
+  const rec=c.tp/(c.tp+c.fn), pre=c.tp/(c.tp+c.fp), fpr=c.fp/(c.fp+c.tn); return [esc(NAMES[k]),(c.tp+c.fp).toLocaleString(),pct(rec),pct(pre),pct(fpr)]; })); }
+function renderFeed(){ table($("#feed"),["Time","Port","Alerts from","Truth","Sup. p"], feedRows.slice(0,12).map(r=>[esc(r.time.slice(5)),r.dst_port,
+  `<span style="white-space:normal">${esc(r.alerts.filter(a=>a!=="hybrid").map(a=>SHORT[a]).join(", "))}</span>`, `<span class="tag ${r.truth==="Benign"?"ben":"atk"}">${esc(r.truth)}</span>`, fmt(r.scores.supervised,3)])); }
+getJSON("/api/replay/days").then(ds=>{ window.DAYS=ds; $("#day").innerHTML=ds.map((d,i)=>`<option value="${i}">${d.day}  (${d.records.toLocaleString()} records, ${pct(d.attack_share)} attacks)</option>`).join(""); }).catch(()=>{});
+$("#rstart").addEventListener("click",()=>{
+  if(!window.DAYS) return; resetReplay();
+  const d=window.DAYS[+$("#day").value], start=d.start+Math.floor(d.records*(+$("#startpct").value)/100);
+  const url=`/api/replay/stream?start=${start}&batch=${$("#batch").value}&interval=${$("#interval").value}&ticks=1000`;
+  es=new EventSource(url); $("#rstart").disabled=true; $("#rstop").disabled=false; $("#chartmsg").textContent="Replaying "+d.day+" ...";
+  es.onmessage=ev=>{ const t=JSON.parse(ev.data); total.n+=t.n; total.atk+=t.true_attacks;
+    const row={truth:t.true_attacks/t.n}; for(const k of KEYS){ const m=t.models[k]; row[k]=m.flagged/t.n; for(const q of ["tp","fp","fn","tn"]) cum[k][q]+=m[q]; }
+    data.push(row); if(data.length>300) data.shift(); (t.sample||[]).forEach(s=>feedRows.unshift(s)); feedRows=feedRows.slice(0,40);
+    renderKpis(); renderCum(); renderFeed(); drawChart(); };
+  es.addEventListener("end",()=>stopReplay("Replay finished.")); es.onerror=()=>stopReplay("Replay stopped.");
+});
+function stopReplay(msg){ if(es){es.close();es=null;} $("#rstart").disabled=!(window.HEALTH&&window.HEALTH.replay_data_available); $("#rstop").disabled=true; if(msg) $("#chartmsg").textContent=msg; }
+$("#rstop").addEventListener("click",()=>stopReplay("Stopped."));
+resetReplay();
+
+/* ---- Wireshark / PCAP ---- */
+let pjob=null, ptimer=null, allFilter="";
+const copy = async t => { try{ await navigator.clipboard.writeText(t); return true; }catch(e){ const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(_){} ta.remove(); return ok; } };
+getJSON("/api/flow-validation").then(r=>{
+  const v=r.validation; if(!v) return;
+  const t=v.parity, o=v.ordinary, f=v.held_out_false_alarm_rate||{}, pc=x=>(100*x).toFixed(x<0.01?2:(x<0.1?1:0))+"%", n=x=>x.toLocaleString();
+  const names={supervised:"supervised AE",supervised_recon:"supervised AE + decoder",normal_only:"one-class AE",unsup_mixed:"unsupervised AE"};
+  const rows=Object.keys(names).filter(k=>o.flagged_share[k]!=null).map(k=>names[k]+" "+pc(o.flagged_share[k])+(f[k]!=null?" (lab test: "+pc(f[k])+")":"")).join("; ");
+  const txt=`Checked on ${t.captures} captures (${n(t.packets)} packets, ${n(t.flows_compared)} flows): the ${n(t.flows_with_all_69_features_equal)} flows give the same feature values as CICFlowMeter's own flow code, and the packet fields equal Wireshark's on ${n(t.ipv4_packets_checked_vs_tshark)} packets; ${n(o.flows)} flows come from ordinary web, DNS and ping traffic on a Wi-Fi network. Share of those ordinary flows flagged: ${rows}. See reports/FLOW_VALIDATION.md.`;
+  document.querySelectorAll(".fvsum").forEach(e=>{e.textContent=txt;});
+}).catch(()=>{});
+getJSON("/api/wireshark/info").then(w=>{
+  $("#pinfo").textContent = w.tshark_found ? "tshark found: "+w.tshark_path : "tshark not found (install Wireshark, or set WIRESHARK_DIR). File analysis still works.";
+  $("#pcmd").textContent = "Live pipe:\n  "+w.live_pipe_command+"\nSaved capture:\n  "+w.file_command+"\n(maximum upload on this page: "+w.max_upload_mb+" MB; use the command line for larger captures)";
+  window.OOR=w.out_of_range_reference;
+}).catch(()=>{});
+function renderPcap(st){
+  const s=st.summary;
+  $("#pkpis").innerHTML = s ? [["Packets read",s.packets_read.toLocaleString()],["Used (IPv4)",s.packets_used_ipv4.toLocaleString()],["Flows",s.flows.toLocaleString()],
+     ["Flagged by supervised",(s.flows_flagged_by.supervised||0).toLocaleString()],["Flagged by unsupervised",(s.flows_flagged_by.unsup_mixed||0).toLocaleString()],
+     ["Flows with out-of-range features",s.flows_with_out_of_range_features.toLocaleString()]].map(([a,b])=>`<div class="kpi">${a}<b>${b}</b></div>`).join("") : "";
+  $("#pres").classList.toggle("hidden", !s);
+  if(!s) return;
+  allFilter=st.filter_all_flagged||""; $("#pcopyall").disabled=!allFilter; $("#pnote").textContent=st.filter_note||"";
+  const rows=st.flows.map((f,i)=>[new Date(f.start*1000).toISOString().slice(11,19)+" UTC",f.proto,`${esc(f.src)}:${f.sport} &rarr; ${esc(f.dst)}:${f.dport}`,f.fwd_pkts+"/"+f.bwd_pkts,f.bytes.toLocaleString(),
+     `<span style="white-space:normal">${esc(f.alerts.filter(a=>a!=="hybrid").map(a=>SHORT[a]).join(", ")||"none")}</span>`,fmt(f.scores.supervised,3),f.out_of_range,`<button class="act sec" data-i="${i}" style="padding:2px 8px">Copy filter</button>`]);
+  table($("#ptable"),["Start","Proto","Flow","Pkts fwd/bwd","Bytes","Alerts from","Sup. p","Out of range","Wireshark"],rows);
+  $("#ptable").querySelectorAll("button[data-i]").forEach(b=>b.addEventListener("click",async()=>{ const ok=await copy(st.flows[+b.dataset.i].filter); b.textContent=ok?"Copied":"Select manually"; setTimeout(()=>b.textContent="Copy filter",1500); }));
+}
+async function pollPcap(){
+  try{ const st=await getJSON("/api/pcap/"+pjob+"?limit=300",{headers:hdr()});
+    if(st.status==="running"){ $("#pstatus").textContent="reading ... "+st.packets_read.toLocaleString()+" packets"; return; }
+    clearInterval(ptimer); $("#pgo").disabled=false;
+    if(st.status==="error"){ $("#pstatus").textContent="Could not read the file: "+st.error; return; }
+    $("#pstatus").textContent="done: "+st.filename; $("#pcsv").disabled=false; renderPcap(st);
+  }catch(e){ clearInterval(ptimer); $("#pgo").disabled=false; $("#pstatus").textContent=e.message; }
+}
+async function startPcap(demo){
+  const f=$("#pfile").files[0]; if(!demo && !f){ $("#pstatus").textContent="choose a file first"; return; }
+  const fd=new FormData(); if(!demo) fd.append("file",f); $("#pgo").disabled=true; $("#pcsv").disabled=true; $("#pstatus").textContent=demo?"starting demo ...":"uploading ..."; $("#pres").classList.add("hidden"); $("#pkpis").innerHTML="";
+  try{ const r=await fetch(demo?"/api/pcap-demo":"/api/pcap",{method:"POST",body:demo?undefined:fd,headers:hdr()}); if(!r.ok){ let m=r.statusText; try{ m=(await r.json()).detail||m }catch(e){} throw new Error(m); }
+    pjob=(await r.json()).job; ptimer=setInterval(pollPcap,700); pollPcap(); }
+  catch(e){ $("#pgo").disabled=false; $("#pstatus").textContent=e.message; }
+}
+$("#pgo").addEventListener("click",()=>startPcap(false));
+$("#pdemo").addEventListener("click",()=>startPcap(true));
+$("#pcsv").addEventListener("click",async()=>{ if(!pjob) return; const r=await fetch(`/api/pcap/${pjob}/csv`,{headers:hdr()}); if(!r.ok) return;
+  const a=document.createElement("a"); a.href=URL.createObjectURL(await r.blob()); a.download=`flows_${pjob}.csv`; a.click(); URL.revokeObjectURL(a.href); });
+$("#pcopyall").addEventListener("click",async()=>{ const ok=await copy(allFilter); $("#pcopyall").textContent=ok?"Copied":"Select manually"; setTimeout(()=>$("#pcopyall").textContent="Copy Wireshark filter for all flagged flows",1500); });
+
+/* ---- live capture ---- */
+let ces=null, crows=[];
+const key = () => (window.localStorage && localStorage.getItem("api_key")) || "";
+const hdr = () => key()?{"X-API-Key":key()}:{};
+function ckpis(st){ $("#ckpis").innerHTML=[["Packets seen",(st.packets||0).toLocaleString()],["Flows finished",(st.flows||0).toLocaleString()],["Flagged flows",(st.flagged_flows||0).toLocaleString()],["Seconds",st.seconds||0]].map(([a,b])=>`<div class="kpi">${a}<b>${b}</b></div>`).join(""); }
+function cText(st){ return (st.enabled?"capture enabled":"capture DISABLED (start the server with ENABLE_CAPTURE=1)")+" | "+(st.running?"running":"stopped")+(st.iface?" | "+st.iface:"")+(st.save_path?" | saving to "+st.save_path+(st.save_full?" (size cap reached)":""):"")+(st.error?" | error: "+st.error:""); }
+function cStatus(){ getJSON("/api/capture/status").then(s=>{ $("#cstatus").textContent=cText(s); ckpis(s); $("#cstart").disabled=!s.enabled||s.running; $("#cstop").disabled=!s.running; }).catch(()=>{}); }
+function renderCapture(){ table($("#cfeed"),["Ended","Proto","Flow","Pkts fwd/bwd","Bytes","Alerts from","Sup. p","Out of range","Wireshark"], crows.slice(0,60).map((f,i)=>[new Date((f.start+f.duration_s)*1000).toLocaleTimeString(),f.proto,
+  `${esc(f.src)}:${f.sport} &rarr; ${esc(f.dst)}:${f.dport}`,f.fwd_pkts+"/"+f.bwd_pkts,f.bytes.toLocaleString(),`<span style="white-space:normal">${esc(f.alerts.filter(a=>a!=="hybrid").map(a=>SHORT[a]).join(", ")||"none")}</span>`,
+  fmt(f.scores.supervised,3),f.out_of_range,`<button class="act sec" data-i="${i}" style="padding:2px 8px">Copy filter</button>`]));
+  $("#cfeed").querySelectorAll("button[data-i]").forEach(b=>b.addEventListener("click",async()=>{ const ok=await copy(crows[+b.dataset.i].filter); b.textContent=ok?"Copied":"Select manually"; setTimeout(()=>b.textContent="Copy filter",1500); })); }
+getJSON("/api/capture/interfaces",{headers:hdr()}).then(r=>{ $("#ciface").innerHTML=r.interfaces.map(i=>`<option value="${esc(i.name)}">${esc(i.label)}${i.ip?" ("+esc(i.ip)+")":""} - ${esc(i.description)}</option>`).join("");
+   const w=r.interfaces.find(i=>/wi-?fi|wireless|ethernet/i.test(i.label)&&i.ip&&!i.ip.startsWith("169.254")); if(w) $("#ciface").value=w.name; })
+  .catch(e=>{ $("#ciface").innerHTML='<option value="">unavailable</option>'; $("#cstatus").textContent=e.message; });
+$("#cstart").addEventListener("click",async()=>{
+  try{ await getJSON("/api/capture/start?save="+($("#csave").checked?"true":"false")+($("#ciface").value?"&iface="+encodeURIComponent($("#ciface").value):""),{method:"POST",headers:hdr()}); }catch(e){ $("#cstatus").textContent=e.message; return; }
+  crows=[]; renderCapture(); if(ces) ces.close(); ces=new EventSource("/api/capture/stream"); $("#cstart").disabled=true; $("#cstop").disabled=false;
+  ces.onmessage=ev=>{ const t=JSON.parse(ev.data); (t.flows||[]).forEach(f=>crows.unshift(f)); crows=crows.slice(0,200); renderCapture(); if(t.status){ $("#cstatus").textContent=cText({enabled:true,...t.status}); ckpis(t.status); } };
+  ces.addEventListener("end",()=>{ ces.close(); ces=null; cStatus(); }); ces.onerror=()=>{ if(ces){ ces.close(); ces=null; } cStatus(); };
+});
+$("#cstop").addEventListener("click",async()=>{ try{ await getJSON("/api/capture/stop",{method:"POST",headers:hdr()}); }catch(e){} $("#cstatus").textContent="stopping ..."; setTimeout(cStatus,2500); });
+cStatus();
+</script>
+</body>
+</html>

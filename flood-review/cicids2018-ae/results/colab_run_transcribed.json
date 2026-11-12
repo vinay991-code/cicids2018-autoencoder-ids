@@ -1,0 +1,27 @@
+{
+  "source": "Run B: full run of run_sup_vs_unsup.py in Google Colab (CPU, Python 3.13.18, torch 2.15.0+cpu), 66.4 min, shared notebook 14z6qLHRGT5Bqn0cIPE1vYxAwy7Yj9ODY, saved to Drive folder rerun_20261111_192833. Values transcribed by hand from the notebook output (cells 7 and 9) on 2026-11-12; the Colab result files themselves were not available locally, so these values are NOT covered by verify_results.py.",
+  "table1_test_primary_thresholds": {
+    "unsup_mixed":      {"accuracy": 0.8230, "precision": 0.1282, "recall": 0.0834, "f1": 0.1011, "fpr": 0.0768, "roc_auc": 0.5284, "pr_auc": 0.1231},
+    "normal_only":      {"accuracy": 0.8726, "precision": 0.1154, "recall": 0.0101, "f1": 0.0186, "fpr": 0.0105, "roc_auc": 0.8789, "pr_auc": 0.3975},
+    "supervised":       {"accuracy": 0.9824, "precision": 0.9711, "recall": 0.8790, "f1": 0.9227, "fpr": 0.0035, "roc_auc": 0.9663, "pr_auc": 0.9359},
+    "supervised_recon": {"accuracy": 0.9837, "precision": 0.9620, "recall": 0.8988, "f1": 0.9293, "fpr": 0.0048, "roc_auc": 0.9787, "pr_auc": 0.9520}
+  },
+  "table1_validation_f1_tuned": {
+    "unsup_mixed": {"precision": 0.1392, "recall": 0.9509, "f1": 0.2428, "fpr": 0.7968},
+    "normal_only": {"precision": 0.5349, "recall": 0.7521, "f1": 0.6252, "fpr": 0.0886},
+    "supervised": {"precision": 0.9857, "recall": 0.8618, "f1": 0.9196, "fpr": 0.0017},
+    "supervised_recon": {"precision": 0.9935, "recall": 0.8413, "f1": 0.9111, "fpr": 0.0007}
+  },
+  "table5_primary_thresholds": {
+    "unsup_mixed": {"known_recall": 0.0437, "benign_fpr": 0.0767, "unseen_recall": 0.5281, "bot": 0.026, "ddos_hoic": 0.863, "ssh_bruteforce": 1.000, "dos_hulk": 0.451, "known_roc_auc": 0.4886, "unseen_roc_auc": 0.9042},
+    "normal_only": {"known_recall": 0.0069, "benign_fpr": 0.0098, "unseen_recall": 0.0134, "bot": 0.001, "ddos_hoic": 0.000, "ssh_bruteforce": 0.002, "dos_hulk": 0.035, "known_roc_auc": 0.8821, "unseen_roc_auc": 0.9198},
+    "supervised":  {"known_recall": 0.8713, "benign_fpr": 0.0033, "unseen_recall": 0.1364, "bot": 0.008, "ddos_hoic": 0.081, "ssh_bruteforce": 0.000, "dos_hulk": 0.309, "known_roc_auc": 0.9690, "unseen_roc_auc": 0.6151}
+  },
+  "table5d_roc_auc_seen_to_withheld": {
+    "Bot":            {"unsup_mixed": [0.364, 0.871], "normal_only": [0.888, 0.944], "supervised": [1.000, 0.441]},
+    "DDoS-HOIC":      {"unsup_mixed": [0.588, 0.870], "normal_only": [0.816, 0.879], "supervised": [1.000, 0.839]},
+    "SSH-BruteForce": {"unsup_mixed": [0.693, 0.953], "normal_only": [0.927, 0.951], "supervised": [1.000, 0.260]},
+    "DoS-Hulk":       {"unsup_mixed": [0.812, 0.927], "normal_only": [0.919, 0.916], "supervised": [0.906, 0.735]}
+  },
+  "step_seconds": {"phase3": 1488, "phase4": 798, "phase5": 145, "phase6": 1549}
+}

@@ -1,0 +1,122 @@
+{
+  "change_points": [
+    {
+      "day": "2018-02-16",
+      "interval": 0,
+      "record": 0,
+      "to": "shifted"
+    },
+    {
+      "day": "2018-02-20",
+      "interval": 12,
+      "record": 591870,
+      "to": "back to reference"
+    },
+    {
+      "day": "2018-02-21",
+      "interval": 121,
+      "record": 6024840,
+      "to": "shifted"
+    },
+    {
+      "day": "2018-02-22",
+      "interval": 133,
+      "record": 6586194,
+      "to": "back to reference"
+    }
+  ],
+  "n_detected": 4,
+  "delays_records": [
+    190000,
+    125000,
+    55000,
+    110000
+  ],
+  "alarms": 20,
+  "false_alarms": 10,
+  "false_alarms_in_attack_batches": 3,
+  "false_alarms_per_million_records": 1.0521845666409513,
+  "recovery_intervals": {
+    "A_no_detection": {
+      "2018-02-16": null,
+      "2018-02-21": null
+    },
+    "A2_periodic": {
+      "2018-02-16": 5,
+      "2018-02-21": 7
+    },
+    "B_drift_adaptive": {
+      "2018-02-16": 6,
+      "2018-02-21": 6
+    },
+    "C_drift_confirmed": {
+      "2018-02-16": 7,
+      "2018-02-21": 7
+    }
+  },
+  "mean_retrain_attack_share": {
+    "A_no_detection": null,
+    "A2_periodic": 0.12298051215277776,
+    "B_drift_adaptive": 0.1505,
+    "C_drift_confirmed": 0.32128607696901523
+  },
+  "retrainings": {
+    "A_no_detection": 0,
+    "A2_periodic": 64,
+    "B_drift_adaptive": 45,
+    "C_drift_confirmed": 15
+  },
+  "bootstrap_difference_mean_lo_hi": {
+    "f1": {
+      "B_drift_adaptive - A2_periodic": [
+        0.17155296196162442,
+        0.016028802725052103,
+        0.3447621309365686
+      ],
+      "C_drift_confirmed - B_drift_adaptive": [
+        0.03629013093916679,
+        -0.01589840075505432,
+        0.08678276391693883
+      ],
+      "B_drift_adaptive - A_no_detection": [
+        -0.16355374919110266,
+        -0.4659211447586977,
+        0.1569660731762636
+      ]
+    },
+    "recall": {
+      "B_drift_adaptive - A2_periodic": [
+        0.17051932799429098,
+        0.014307778369020618,
+        0.39983608606899324
+      ],
+      "C_drift_confirmed - B_drift_adaptive": [
+        0.07905802597783808,
+        0.01249514376715933,
+        0.15067724444543637
+      ],
+      "B_drift_adaptive - A_no_detection": [
+        -0.4116383474539974,
+        -0.7369250633140353,
+        0.04472726127886636
+      ]
+    },
+    "fpr": {
+      "B_drift_adaptive - A2_periodic": [
+        0.0005720964767646743,
+        -0.0138729728148581,
+        0.012423870386145525
+      ],
+      "C_drift_confirmed - B_drift_adaptive": [
+        0.021976286328552343,
+        0.011775225594176656,
+        0.03630060505316159
+      ],
+      "B_drift_adaptive - A_no_detection": [
+        -0.09353329067658445,
+        -0.19829981834274965,
+        -0.024581250974562843
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+ "training_data": {
+  "rows": 1500000,
+  "properties": {
+   "flow has at least 2 packets and at least 1 forward packet": 1.0,
+   "flow duration is at most 120 s": 1.0,
+   "first packet counted twice: mean*(n+1) - total payload is an integer >= 0 and <= max packet length": 0.9995833333333334,
+   "Packet Size Avg = (total payload + first payload) / n": 0.9993513333333334,
+   "Packet Length Var = Packet Length Std squared": 1.0,
+   "Packet Length Min/Max = min/max of the forward and backward extremes": 1.0,
+   "Down/Up Ratio = integer part of bwd/fwd packets": 1.0,
+   "subflow columns equal the flow totals": 0.9999953333333333,
+   "Fwd/Bwd segment size avg = mean forward/backward payload": 1.0,
+   "forward mean * forward packets = total forward payload": 1.0,
+   "Flow IAT mean * (n-1) = flow duration": 1.0,
+   "Flow Bytes/s = total payload / duration (duration > 0)": 1.0,
+   "Flow Packets/s = packets / duration (duration > 0)": 1.0,
+   "the eight flag columns are 0 or 1": 1.0,
+   "'SYN' column = Fwd PSH Flags (HashMap column order, first packet only)": 1.0,
+   "'CWE' column = Fwd URG Flags": 1.0,
+   "'RST' column = 'ECE' column (ECN-setup SYN carries both)": 0.9999966666666666,
+   "UDP and other-IP flows have all flag columns 0 and both init windows -1": 1.0,
+   "TCP flows have an init forward window >= 0": 1.0,
+   "active data packets <= forward packets - 1 (the first packet is not counted)": 1.0,
+   "header length is the transport header: UDP forward header = 8 per packet": 1.0,
+   "TCP header per forward packet is 20 to 60 bytes": 1.0,
+   "TCP minimum forward header is 20 to 60 and a multiple of 4": 1.0,
+   "protocol-0 flows have no payload, no header bytes, windows -1": 1.0,
+   "an active period is recorded only together with an idle gap": 1.0,
+   "every idle gap is longer than 5 s": 1.0
+  },
+  "statistical": {
+   "~ TCP flows whose first packet is SYN or ACK (the 'PSH' and 'ACK' columns add to 1)": 0.9960740419286325,
+   "~ TCP flows that start with a FIN (the 'URG' column), all of which have exactly 2 packets": 0.9080892587654393,
+   "~ share of TCP flows that start with a FIN": 0.060200081853270956,
+   "~ TCP flows that contain a payload-free packet (Pkt Len Min = 0)": 0.9986698843469732,
+   "~ share of flows with protocol 0": 0.012992
+  }
+ },
+ "port_on_ordinary_wifi.pcap+ordinary_wifi2.pcap+ordinary_live.pcap": {
+  "rows": 1149,
+  "properties": {
+   "flow has at least 2 packets and at least 1 forward packet": 1.0,
+   "flow duration is at most 120 s": 1.0,
+   "first packet counted twice: mean*(n+1) - total payload is an integer >= 0 and <= max packet length": 1.0,
+   "Packet Size Avg = (total payload + first payload) / n": 1.0,
+   "Packet Length Var = Packet Length Std squared": 1.0,
+   "Packet Length Min/Max = min/max of the forward and backward extremes": 1.0,
+   "Down/Up Ratio = integer part of bwd/fwd packets": 1.0,
+   "subflow columns equal the flow totals": 1.0,
+   "Fwd/Bwd segment size avg = mean forward/backward payload": 1.0,
+   "forward mean * forward packets = total forward payload": 1.0,
+   "Flow IAT mean * (n-1) = flow duration": 1.0,
+   "Flow Bytes/s = total payload / duration (duration > 0)": 1.0,
+   "Flow Packets/s = packets / duration (duration > 0)": 1.0,
+   "the eight flag columns are 0 or 1": 1.0,
+   "'SYN' column = Fwd PSH Flags (HashMap column order, first packet only)": 1.0,
+   "'CWE' column = Fwd URG Flags": 1.0,
+   "'RST' column = 'ECE' column (ECN-setup SYN carries both)": 1.0,
+   "UDP and other-IP flows have all flag columns 0 and both init windows -1": 1.0,
+   "TCP flows have an init forward window >= 0": 1.0,
+   "active data packets <= forward packets - 1 (the first packet is not counted)": 1.0,
+   "header length is the transport header: UDP forward header = 8 per packet": 1.0,
+   "TCP header per forward packet is 20 to 60 bytes": 1.0,
+   "TCP minimum forward header is 20 to 60 and a multiple of 4": 1.0,
+   "protocol-0 flows have no payload, no header bytes, windows -1": 1.0,
+   "an active period is recorded only together with an idle gap": 1.0,
+   "every idle gap is longer than 5 s": 1.0
+  },
+  "statistical": {
+   "~ TCP flows whose first packet is SYN or ACK (the 'PSH' and 'ACK' columns add to 1)": 0.9977324263038548,
+   "~ TCP flows that start with a FIN (the 'URG' column), all of which have exactly 2 packets": 0.8823529411764706,
+   "~ share of TCP flows that start with a FIN": 0.11564625850340136,
+   "~ TCP flows that contain a payload-free packet (Pkt Len Min = 0)": 1.0,
+   "~ share of flows with protocol 0": 0.0026109660574412533
+  }
+ }
+}

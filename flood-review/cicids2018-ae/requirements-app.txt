@@ -1,0 +1,10 @@
+numpy
+pandas
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+scapy
+# torch is NOT needed to run the dashboard: app/npmodels.py reads the saved .pt weights and runs the models in numpy
+# (torch is only needed to re-train: see requirements.txt and README.md)
+# for the tests: pip install pytest httpx

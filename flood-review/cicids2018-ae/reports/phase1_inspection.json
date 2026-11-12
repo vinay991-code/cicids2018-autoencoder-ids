@@ -1,0 +1,373 @@
+{
+  "data_dir": "data\\raw",
+  "n_files": 10,
+  "total_rows": 16232943,
+  "embedded_header_rows_dropped": 59,
+  "n_feature_columns_common_excl_ids_label": 78,
+  "label_counts": {
+    "Benign": 13484708,
+    "DDOS attack-HOIC": 686012,
+    "DDoS attacks-LOIC-HTTP": 576191,
+    "DoS attacks-Hulk": 461912,
+    "Bot": 286191,
+    "FTP-BruteForce": 193360,
+    "SSH-Bruteforce": 187589,
+    "Infilteration": 161934,
+    "DoS attacks-SlowHTTPTest": 139890,
+    "DoS attacks-GoldenEye": 41508,
+    "DoS attacks-Slowloris": 10990,
+    "DDOS attack-LOIC-UDP": 1730,
+    "Brute Force -Web": 611,
+    "Brute Force -XSS": 230,
+    "SQL Injection": 87
+  },
+  "benign_rows": 13484708,
+  "timestamps": {
+    "unparseable": 0,
+    "non_monotonic_steps": 5249787
+  },
+  "schema": {
+    "n_files": 10,
+    "columns_per_file": {
+      "Friday-02-03-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Friday-23-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv": 84,
+      "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv": 80,
+      "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv": 80
+    },
+    "common_columns": 80,
+    "union_columns": 84,
+    "columns_missing_per_file": {
+      "Friday-02-03-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Friday-23-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ],
+      "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv": [
+        "dst_ip",
+        "flow_id",
+        "src_ip",
+        "src_port"
+      ]
+    },
+    "dup_normalized_names_in_file": {}
+  },
+  "duplicates": {
+    "exact_row_duplicates": {
+      "rows": 16232943,
+      "unique": 15799750,
+      "duplicates": 433193
+    },
+    "feature_vector_duplicates": {
+      "rows": 16232943,
+      "unique": 11981791,
+      "duplicates": 4251152
+    },
+    "feature_vectors_with_conflicting_labels": 22136
+  },
+  "constant_columns": [
+    "bwd_blk_rate_avg",
+    "bwd_byts_b_avg",
+    "bwd_pkts_b_avg",
+    "bwd_psh_flags",
+    "bwd_urg_flags",
+    "fwd_blk_rate_avg",
+    "fwd_byts_b_avg",
+    "fwd_pkts_b_avg"
+  ],
+  "all_nan_columns": [],
+  "columns_with_nan_inf_nonnumeric": {
+    "flow_byts_s": {
+      "min": 0.0,
+      "max": 1806642857.14286,
+      "nan": 59721,
+      "inf": 36039,
+      "nonnum": 0,
+      "neg": 0
+    },
+    "flow_pkts_s": {
+      "min": -0.0088953248,
+      "max": 6000000.0,
+      "nan": 0,
+      "inf": 95760,
+      "nonnum": 0,
+      "neg": 14
+    }
+  },
+  "columns_with_negative_values": {
+    "flow_duration": 14,
+    "flow_iat_max": 3,
+    "flow_iat_mean": 14,
+    "flow_iat_min": 15,
+    "flow_pkts_s": 14,
+    "fwd_iat_max": 3,
+    "fwd_iat_mean": 14,
+    "fwd_iat_min": 15,
+    "fwd_iat_tot": 14,
+    "init_bwd_win_byts": 8255549,
+    "init_fwd_win_byts": 4432608
+  },
+  "leakage": {
+    "identifier_columns_present_in_all_files": [
+      "timestamp"
+    ],
+    "identifier_columns_present_in_some_files": [
+      "dst_ip",
+      "flow_id",
+      "src_ip",
+      "src_port"
+    ],
+    "label_time_windows": {
+      "Benign": [
+        "1970-01-05 03:01:17",
+        "2018-03-02 12:59:59"
+      ],
+      "Bot": [
+        "2018-03-02 01:00:00",
+        "2018-03-02 12:59:59"
+      ],
+      "DoS attacks-Hulk": [
+        "2018-02-16 01:45:27",
+        "2018-02-16 01:48:44"
+      ],
+      "DoS attacks-SlowHTTPTest": [
+        "2018-02-16 10:12:14",
+        "2018-02-16 10:58:08"
+      ],
+      "Brute Force -Web": [
+        "2018-02-22 10:13:44",
+        "2018-02-23 11:02:58"
+      ],
+      "Brute Force -XSS": [
+        "2018-02-22 01:51:39",
+        "2018-02-23 02:10:05"
+      ],
+      "SQL Injection": [
+        "2018-02-22 01:52:33",
+        "2018-02-23 10:53:21"
+      ],
+      "DDoS attacks-LOIC-HTTP": [
+        "2018-02-20 01:14:17",
+        "2018-02-20 11:16:48"
+      ],
+      "Infilteration": [
+        "2018-02-28 01:42:00",
+        "2018-03-01 10:54:59"
+      ],
+      "DoS attacks-GoldenEye": [
+        "2018-02-15 09:27:42",
+        "2018-02-15 10:02:59"
+      ],
+      "DoS attacks-Slowloris": [
+        "2018-02-15 11:00:12",
+        "2018-02-15 11:42:01"
+      ],
+      "FTP-BruteForce": [
+        "2018-02-14 10:33:26",
+        "2018-02-14 12:10:31"
+      ],
+      "SSH-Bruteforce": [
+        "2018-02-14 02:01:21",
+        "2018-02-14 03:32:30"
+      ],
+      "DDOS attack-HOIC": [
+        "2018-02-21 02:11:08",
+        "2018-02-21 02:33:29"
+      ],
+      "DDOS attack-LOIC-UDP": [
+        "2018-02-21 10:08:51",
+        "2018-02-21 10:43:16"
+      ]
+    },
+    "label_only_in_one_file": [
+      "Bot",
+      "DDOS attack-HOIC",
+      "DDOS attack-LOIC-UDP",
+      "DDoS attacks-LOIC-HTTP",
+      "DoS attacks-GoldenEye",
+      "DoS attacks-Hulk",
+      "DoS attacks-SlowHTTPTest",
+      "DoS attacks-Slowloris",
+      "FTP-BruteForce",
+      "SSH-Bruteforce"
+    ]
+  },
+  "per_file": {
+    "Friday-02-03-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "2018-03-02 01:00:00",
+      "ts_max": "2018-03-02 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 292106,
+      "labels": {
+        "Bot": 286191,
+        "Benign": 762384
+      }
+    },
+    "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048574,
+      "embedded_header_rows": 1,
+      "ts_min": "2018-02-16 01:00:32",
+      "ts_max": "2018-02-16 12:58:24",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 268941,
+      "labels": {
+        "DoS attacks-Hulk": 461912,
+        "DoS attacks-SlowHTTPTest": 139890,
+        "Benign": 446772
+      }
+    },
+    "Friday-23-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "2018-02-23 01:00:00",
+      "ts_max": "2018-02-23 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 378363,
+      "labels": {
+        "Benign": 1048009,
+        "Brute Force -Web": 362,
+        "Brute Force -XSS": 151,
+        "SQL Injection": 53
+      }
+    },
+    "Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 7948748,
+      "embedded_header_rows": 0,
+      "ts_min": "2018-02-20 01:00:00",
+      "ts_max": "2018-02-20 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 2977911,
+      "labels": {
+        "DDoS attacks-LOIC-HTTP": 576191,
+        "Benign": 7372557
+      }
+    },
+    "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 331100,
+      "embedded_header_rows": 25,
+      "ts_min": "2018-03-01 01:00:00",
+      "ts_max": "2018-03-01 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 37824,
+      "labels": {
+        "Benign": 238037,
+        "Infilteration": 93063
+      }
+    },
+    "Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "2018-02-15 01:00:00",
+      "ts_max": "2018-02-15 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 382967,
+      "labels": {
+        "Benign": 996077,
+        "DoS attacks-GoldenEye": 41508,
+        "DoS attacks-Slowloris": 10990
+      }
+    },
+    "Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "1970-01-10 03:04:26",
+      "ts_max": "2018-02-22 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 380319,
+      "labels": {
+        "Benign": 1048213,
+        "Brute Force -Web": 249,
+        "Brute Force -XSS": 79,
+        "SQL Injection": 34
+      }
+    },
+    "Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "1970-01-05 03:01:17",
+      "ts_max": "2018-02-14 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 289765,
+      "labels": {
+        "FTP-BruteForce": 193360,
+        "SSH-Bruteforce": 187589,
+        "Benign": 667626
+      }
+    },
+    "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 1048575,
+      "embedded_header_rows": 0,
+      "ts_min": "2018-02-21 01:55:46",
+      "ts_max": "2018-02-21 10:43:21",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 4056,
+      "labels": {
+        "DDOS attack-HOIC": 686012,
+        "Benign": 360833,
+        "DDOS attack-LOIC-UDP": 1730
+      }
+    },
+    "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv": {
+      "rows": 613071,
+      "embedded_header_rows": 33,
+      "ts_min": "2018-02-28 01:00:00",
+      "ts_max": "2018-02-28 12:59:59",
+      "ts_fail": 0,
+      "ts_non_monotonic_steps": 237535,
+      "labels": {
+        "Benign": 544200,
+        "Infilteration": 68871
+      }
+    }
+  }
+}

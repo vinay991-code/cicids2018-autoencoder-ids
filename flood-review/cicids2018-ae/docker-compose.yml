@@ -1,0 +1,19 @@
+# docker compose up --build      then open http://127.0.0.1:8000
+# Published on this computer only (127.0.0.1). To expose it to a network, set APP_API_KEY first and put a reverse proxy with HTTPS in front.
+services:
+  ids-dashboard:
+    build: .
+    image: ids-dashboard
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      # APP_API_KEY: "change-me"        # if set, POST and capture endpoints need the header X-API-Key
+      ENABLE_CAPTURE: "0"                # live capture needs host networking, privileges and Npcap/libpcap; keep it off in the container
+    volumes:
+      # Optional: mount the processed test data to enable the Live replay tab (large files, read-only).
+      - ./data/processed/X_test.npy:/srv/ids/data/processed/X_test.npy:ro
+      - ./data/processed/meta_test.pkl:/srv/ids/data/processed/meta_test.pkl:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    restart: unless-stopped

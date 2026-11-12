@@ -1,0 +1,82 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1) Dry run - show the commands only",
+      "type": "shell",
+      "command": "python run_sup_vs_unsup.py --dry-run",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "2) Quick trial (about 11 min, numbers are not valid results)",
+      "type": "shell",
+      "command": "python run_sup_vs_unsup.py --quick --out rerun_quick",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "3) FULL run - supervised vs unsupervised (about 50 min)",
+      "type": "shell",
+      "command": "python run_sup_vs_unsup.py --out rerun_vscode",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Check the reference numbers (about 1 min)",
+      "type": "shell",
+      "command": "python src/verify_results.py",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Seeds A) Dry run for seeds 1 to 4 - show the commands only",
+      "type": "shell",
+      "command": "python run_seeds.py --seeds 1 2 3 4 --dry-run",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Seeds B) Quick trial, seed 1 (about 5 min, numbers are not valid results)",
+      "type": "shell",
+      "command": "python run_seeds.py --seeds 1 --quick --out seeds_quick_vscode",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Seeds C) FULL run of seed 1 (about 45 min)",
+      "type": "shell",
+      "command": "python run_seeds.py --seeds 1",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Seeds D) FULL run of seeds 1 2 3 4 (about 3 hours; finished seeds are skipped)",
+      "type": "shell",
+      "command": "python run_seeds.py --seeds 1 2 3 4",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "App 1) Start the dashboard and backend (http://127.0.0.1:8000)",
+      "type": "shell",
+      "command": "python run_app.py",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "App 2) Run the app tests (about 20 s)",
+      "type": "shell",
+      "command": "python -m pytest tests -q",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Seeds E) Intervals over the seeds (adds the reference laptop run as seed 42)",
+      "type": "shell",
+      "command": "python src/aggregate_seeds.py --seeds-dir seeds --extra 42=results",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    }
+  ]
+}

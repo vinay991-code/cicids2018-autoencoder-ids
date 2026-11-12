@@ -1,0 +1,7 @@
+pandas
+numpy
+scikit-learn
+matplotlib
+psutil
+river
+# torch (CPU build): pip install torch --index-url https://download.pytorch.org/whl/cpu

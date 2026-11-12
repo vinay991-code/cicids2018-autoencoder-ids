@@ -1,0 +1,22 @@
+# large data and run outputs (re-creatable, see README.md)
+data/raw/
+data/interim/
+data/processed/*.npy
+data/processed/*.pkl
+rerun/
+rerun_quick/
+seeds_quicktest/
+seeds/seed_*/
+*.npy
+*.pkl
+*.f32
+*.npz
+# local captures of real traffic, downloaded reference build, caches
+captures/
+tools/cicflowmeter_ref/_build/
+__pycache__/
+.pytest_cache/
+*.pyc
+# the zip is a build product
+sup_vs_unsup_code_package.zip
+*.pcapng

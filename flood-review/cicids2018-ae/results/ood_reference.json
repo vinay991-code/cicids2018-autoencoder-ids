@@ -1,0 +1,9 @@
+{
+  "n_rows_sampled": 200000,
+  "seed": 0,
+  "numeric_features": 68,
+  "median": 0.0,
+  "p90": 0.0,
+  "p99": 0.0,
+  "share_with_any_out_of_range": 5e-06
+}

@@ -1,0 +1,87 @@
+{
+ "per_file": [
+  {
+   "file": "ordinary_wifi.pcap",
+   "packets": 8990,
+   "flows": 315,
+   "single_packet_flows_not_reported": 107,
+   "flagged": {
+    "unsup_mixed": 234,
+    "normal_only": 20,
+    "supervised": 2,
+    "supervised_recon": 2,
+    "hybrid": 235
+   },
+   "flows_with_out_of_range_feature": 1,
+   "protocol_mix": {
+    "0": 1,
+    "6": 101,
+    "17": 213
+   }
+  },
+  {
+   "file": "ordinary_wifi2.pcap",
+   "packets": 57164,
+   "flows": 562,
+   "single_packet_flows_not_reported": 133,
+   "flagged": {
+    "unsup_mixed": 383,
+    "normal_only": 21,
+    "supervised": 18,
+    "supervised_recon": 12,
+    "hybrid": 389
+   },
+   "flows_with_out_of_range_feature": 4,
+   "protocol_mix": {
+    "0": 1,
+    "6": 233,
+    "17": 328
+   }
+  },
+  {
+   "file": "ordinary_live.pcap",
+   "packets": 12377,
+   "flows": 272,
+   "single_packet_flows_not_reported": 78,
+   "flagged": {
+    "unsup_mixed": 178,
+    "normal_only": 9,
+    "supervised": 7,
+    "supervised_recon": 6,
+    "hybrid": 179
+   },
+   "flows_with_out_of_range_feature": 0,
+   "protocol_mix": {
+    "0": 1,
+    "6": 107,
+    "17": 164
+   }
+  }
+ ],
+ "total": {
+  "flows": 1149,
+  "flagged": {
+   "unsup_mixed": 795,
+   "normal_only": 50,
+   "supervised": 27,
+   "supervised_recon": 20,
+   "hybrid": 803
+  },
+  "flagged_share": {
+   "unsup_mixed": 0.6919060052219321,
+   "normal_only": 0.04351610095735422,
+   "supervised": 0.02349869451697128,
+   "supervised_recon": 0.017406440382941687,
+   "hybrid": 0.6988685813751088
+  },
+  "flows_with_out_of_range_feature": 5,
+  "share_with_out_of_range_feature": 0.004351610095735422
+ },
+ "thresholds": {
+  "unsup_mixed": 0.0001800501486286521,
+  "normal_only": 0.01393310260027647,
+  "supervised": 0.5,
+  "supervised_recon": 0.5
+ },
+ "note": "presumed-benign ordinary traffic; counts of flagged flows are false-alarm counts only if the flow really is benign"
+}
