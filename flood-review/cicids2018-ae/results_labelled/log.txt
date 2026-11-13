@@ -1,0 +1,41 @@
+test rows 2,163,852, attack share 11.93%, blocks 991
+seed 42 unsup_mixed (ordinary loss)                F1 rows 0.2188  blocks 0.1904
+seed 42 normal_only (benign-only, ordinary loss)   F1 rows 0.6517  blocks 0.5604
+seed 42 trimmed 10%                                F1 rows 0.2357  blocks 0.2106
+seed 42 trimmed 20%                                F1 rows 0.2314  blocks 0.2188
+seed 42 trimmed 30%                                F1 rows 0.2226  blocks 0.2049
+seed 42 DAE-LR mixed, lambda=0.01                  F1 rows 0.2212  blocks 0.2016
+seed 42 DAE-LR mixed, lambda=0.1                   F1 rows 0.2442  blocks 0.2380
+seed 42 DAE-LR mixed, lambda=1                     F1 rows 0.2291  blocks 0.1932
+seed 42 DAE-LR mixed, lambda=10                    F1 rows 0.2268  blocks 0.1909
+seed 42 DAE-LR benign-only, lambda=0.01            F1 rows 0.6640  blocks 0.5731
+seed 42 DAE-LR benign-only, lambda=0.1             F1 rows 0.6624  blocks 0.6099
+seed 42 DAE-LR benign-only, lambda=1               F1 rows 0.6355  blocks 0.6026
+seed 42 DAE-LR benign-only, lambda=10              F1 rows 0.5512  blocks 0.4826
+seed  1 unsup_mixed (ordinary loss)                F1 rows 0.2202  blocks 0.1898
+seed  1 normal_only (benign-only, ordinary loss)   F1 rows 0.7280  blocks 0.6130
+seed  1 trimmed 10%                                F1 rows 0.2457  blocks 0.2272
+seed  1 trimmed 20%                                F1 rows 0.2188  blocks 0.2086
+seed  1 trimmed 30%                                F1 rows 0.2329  blocks 0.2090
+seed  1 DAE-LR mixed, lambda=0.01                  F1 rows 0.2324  blocks 0.2023
+seed  1 DAE-LR mixed, lambda=0.1                   F1 rows 0.2294  blocks 0.1958
+seed  1 DAE-LR mixed, lambda=1                     F1 rows 0.2172  blocks 0.1822
+seed  1 DAE-LR mixed, lambda=10                    F1 rows 0.2136  blocks 0.1860
+seed  1 DAE-LR benign-only, lambda=0.01            F1 rows 0.7172  blocks 0.7113
+seed  1 DAE-LR benign-only, lambda=0.1             F1 rows 0.5832  blocks 0.5366
+seed  1 DAE-LR benign-only, lambda=1               F1 rows 0.6128  blocks 0.5439
+seed  1 DAE-LR benign-only, lambda=10              F1 rows 0.5327  blocks 0.4889
+seed  2 unsup_mixed (ordinary loss)                F1 rows 0.2470  blocks 0.2074
+seed  2 normal_only (benign-only, ordinary loss)   F1 rows 0.7581  blocks 0.7598
+seed  2 trimmed 10%                                F1 rows 0.2179  blocks 0.1796
+seed  2 trimmed 20%                                F1 rows 0.2156  blocks 0.1870
+seed  2 trimmed 30%                                F1 rows 0.2246  blocks 0.2055
+seed  2 DAE-LR mixed, lambda=0.01                  F1 rows 0.2344  blocks 0.2130
+seed  2 DAE-LR mixed, lambda=0.1                   F1 rows 0.2308  blocks 0.2087
+seed  2 DAE-LR mixed, lambda=1                     F1 rows 0.2363  blocks 0.2037
+seed  2 DAE-LR mixed, lambda=10                    F1 rows 0.2367  blocks 0.2048
+seed  2 DAE-LR benign-only, lambda=0.01            F1 rows 0.6961  blocks 0.6098
+seed  2 DAE-LR benign-only, lambda=0.1             F1 rows 0.6447  blocks 0.6133
+seed  2 DAE-LR benign-only, lambda=1               F1 rows 0.6214  blocks 0.5486
+seed  2 DAE-LR benign-only, lambda=10              F1 rows 0.6084  blocks 0.5492
+Phase 15 done
