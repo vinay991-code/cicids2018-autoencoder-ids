@@ -1,4 +1,4 @@
-"""Phase 13 / Experiment I: does label-free robust training close the contamination gap? (evaluation of an EXISTING idea on this dataset)
+"""Phase 13 / Experiment H (report Table D): does label-free robust training close the contamination gap? (evaluation of an EXISTING idea on this dataset)
 
 Background: Phases 3-5 showed that the autoencoder trained on unlabeled traffic that contains about 12% attacks (`unsup_mixed`) ranks attacks
 no better than chance (ROC-AUC 0.47-0.53) while the same network trained on benign rows only (`normal_only`) reaches 0.88-0.89. The literature

@@ -378,3 +378,48 @@ def test_model_loader_matches_torch_when_torch_is_available():
         assert list(mine) == list(ref)
         for k in ref:
             assert np.array_equal(mine[k], ref[k].numpy()), (f, k)
+
+
+# ---------------------------------------------------------------- drift and adaptation tab (saved experiment results) --------
+def test_stream_experiments_equal_the_saved_files():
+    import csv
+    from collections import Counter
+    r = client.get("/api/stream-experiments")
+    assert r.status_code == 200
+    d = r.json()["data"]
+    for ph, jf, cf in ((7, "phase7_main.json", "phase7_main_intervals.csv"), (9, "phase9_main.json", "phase9_main_intervals.csv")):
+        saved = json.loads((ROOT / "results" / jf).read_text())
+        tot = {}
+        for row in csv.DictReader(open(ROOT / "results" / cf)):
+            c = tot.setdefault(row["arm"], Counter())
+            for k in ("tp", "fp", "fn", "tn"):
+                c[k] += int(row[k])
+        assert set(d[f"phase{ph}"]["arms"]) == set(saved["arms"])
+        for arm, a in d[f"phase{ph}"]["arms"].items():
+            o = saved["arms"][arm]["overall"]
+            for k in ("precision", "recall", "f1", "fpr"):
+                assert a["overall"][k] == o[k], (ph, arm, k)
+            # the per-interval curves rebuilt from the CSV add up to the totals of the JSON file
+            n = a["series"]["n"]
+            assert sum(s * m for s, m in zip(a["series"]["flagged_share"], n)) == pytest.approx(o["tp"] + o["fp"], abs=1e-3)
+            assert tot[arm]["tp"] == o["tp"] and tot[arm]["fp"] == o["fp"] and tot[arm]["fn"] == o["fn"] and tot[arm]["tn"] == o["tn"]
+            assert len(n) == len(d[f"phase{ph}"]["days"])
+    det = json.loads((ROOT / "results/phase9_detection.json").read_text())
+    p9 = d["phase9"]
+    assert len(p9["alarms"]) == det["alarms"] == p9["detection"]["alarms"]
+    assert p9["detection"]["detected"] == det["n_detected"] and p9["detection"]["known_changes"] == len(det["change_points"])
+    assert p9["arms"]["B_drift_adaptive"]["retrainings"] == det["retrainings"]["B_drift_adaptive"]
+
+
+def test_stream_experiments_missing_files(monkeypatch, tmp_path):
+    from app import streamexp
+    monkeypatch.setattr(streamexp, "RES", tmp_path)
+    assert streamexp.load() is None
+
+
+def test_served_models_are_not_adapted():
+    """The dashboard never updates its models: scoring the same record twice, with a replay in between, gives identical scores."""
+    X = np.random.default_rng(0).random((5, DET.dim)).astype(np.float32)
+    a = DET.score(X)["scores"]["supervised"].copy()
+    DET.score(np.random.default_rng(1).random((50, DET.dim)).astype(np.float32))
+    assert np.array_equal(a, DET.score(X)["scores"]["supervised"])

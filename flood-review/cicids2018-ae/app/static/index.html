@@ -8,7 +8,7 @@
   :root{
     --bg:#f6f7f9; --card:#ffffff; --ink:#16202b; --muted:#5b6876; --line:#dfe3e8; --accent:#0b5cad; --warn-bg:#fff4e0; --warn-ink:#7a4b00;
     --good:#0a7d4f; --bad:#b3261e; --grid:#e8ebef;
-    --c-truth:#6b7785; --c-unsup_mixed:#E69F00; --c-normal_only:#009E73; --c-supervised:#0072B2; --c-supervised_recon:#56B4E9; --c-hybrid:#CC79A7;
+    --s0:#6b7785; --s1:#E69F00; --s2:#0072B2; --s3:#CC79A7; --c-truth:#6b7785; --c-unsup_mixed:#E69F00; --c-normal_only:#009E73; --c-supervised:#0072B2; --c-supervised_recon:#56B4E9; --c-hybrid:#CC79A7;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -60,6 +60,11 @@
   .tag{display:inline-block;padding:1px 7px;border-radius:999px;font-size:12px;border:1px solid var(--line);margin-right:4px}
   .tag.atk{border-color:var(--bad);color:var(--bad)} .tag.ben{border-color:var(--good);color:var(--good)}
   .hidden{display:none}
+  details.how{border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:8px 0}
+  details.how summary{cursor:pointer;font-weight:600}
+  .sc{height:300px}
+  #sinfo7,#sinfo9{min-height:2.6em}
+  .small td,.small th{padding:4px 7px}
   .tabs-hint{font-size:12.5px;color:var(--muted)}
   @media (max-width:520px){.wrap{padding:12px}}
 </style>
@@ -79,6 +84,7 @@
   <button role="tab" aria-selected="false" data-tab="replay">Live replay</button>
   <button role="tab" aria-selected="false" data-tab="pcap">Wireshark / PCAP</button>
   <button role="tab" aria-selected="false" data-tab="capture">Live capture</button>
+  <button role="tab" aria-selected="false" data-tab="stream">Drift and adaptation</button>
   <button role="tab" aria-selected="false" data-tab="models">Models and thresholds</button>
 </nav>
 
@@ -174,6 +180,52 @@
   </div>
 </section>
 
+<!-- ============ DRIFT AND ADAPTATION ============ -->
+<section id="tab-stream" class="hidden">
+  <div class="note"><b>Saved results of two offline experiments, not a live feature.</b> The detectors served by this application are static: they are never updated while it runs. Concept drift and the adaptive baseline were tested separately on the whole data set replayed in time order (all days, one stream, one run with seed 42), and this tab shows those saved results. Nothing here is computed or adapted in the browser or on the server. Attack labels appear only to count results; they never controlled an update or an alarm. The report (Section 5.4, <code>reports/phase7_findings.md</code>, <code>reports/phase9_findings.md</code>) has the bootstrap intervals; differences between arms on this tab come from one run and are not tested for significance here.</div>
+  <div id="smsg" class="muted">loading ...</div>
+
+  <div class="card" id="p7card" hidden>
+    <h2>Adaptive baseline (Phase 7)</h2>
+    <div class="muted" id="p7intro"></div>
+    <details class="how"><summary>How it works</summary>
+      <p>The stream is cut into intervals. Every interval is scored and flagged with the model and threshold the arm already has; only afterwards does the arm update itself from that interval, so nothing is used before its predictions are made.</p>
+      <p><b>A</b> keeps one model and one threshold. <b>B</b> keeps the model but re-estimates the threshold every interval from the recent scores of all records (a robust median + k x MAD rule; k is chosen so the starting threshold equals A's). <b>C</b> uses B's threshold and also fine-tunes the autoencoder on a rolling <i>trusted buffer</i>: from every interval a random sample is drawn and only records that the arm itself scored as normal enter the buffer. Guards: a cap per interval, replay of clean warm-up records, and an update is rejected if the error on a fixed clean anchor set grows too much. No attack label controls any update.</p>
+    </details>
+    <div class="scroll"><table id="t7" class="small"></table></div>
+    <div class="controls" style="margin-top:10px">
+      <label>Show per interval <select id="m7"></select></label>
+    </div>
+    <canvas id="c7" class="sc"></canvas>
+    <div class="legend" id="l7"></div>
+    <div class="muted" id="sinfo7">Move the mouse over the chart to read the values of an interval.</div>
+    <div class="muted" id="s7find" style="margin-top:6px"></div>
+    <h2 style="margin-top:14px">ROC-AUC within each day</h2>
+    <div class="scroll"><table id="a7" class="small"></table></div>
+  </div>
+
+  <div class="card" id="p9card" hidden>
+    <h2>Concept drift monitoring (Phase 9)</h2>
+    <div class="muted" id="p9intro"></div>
+    <details class="how"><summary>How it works</summary>
+      <p>A <b>sentinel</b> model (the warm-up autoencoder, never updated) scores every record, so adapting any arm cannot feed back into detection. The stream is cut into small batches and each batch gives a few statistics: the mean log reconstruction error, the share of records the sentinel flags, the means of five traffic features and the UDP share. Each statistic feeds its own ADWIN change detector; an alarm is raised when any detector reports a change.</p>
+      <p>The arms differ in what they do with an alarm: <b>A</b> ignores it and never updates, <b>A2</b> retrains on a fixed schedule without looking at alarms, <b>B</b> retrains after an alarm, <b>C</b> acts on an alarm only if the deviation persists in the following intervals and leaves the highest-scoring records out of the retraining data. Detector settings are fixed in advance and no label controls them.</p>
+    </details>
+    <div class="scroll"><table id="t9" class="small"></table></div>
+    <div class="muted" id="s9det" style="margin-top:8px"></div>
+    <div class="controls" style="margin-top:10px">
+      <label>Show per interval <select id="m9"></select></label>
+    </div>
+    <canvas id="c9" class="sc"></canvas>
+    <div class="legend" id="l9"></div>
+    <div class="muted">Triangles at the top: drift alarms. Dashed vertical lines: the four known changes in the benign traffic (shift away from the warm-up regime, and back).</div>
+    <div class="muted" id="sinfo9">Move the mouse over the chart to read the values of an interval.</div>
+    <div class="muted" id="s9find" style="margin-top:6px"></div>
+    <h2 style="margin-top:14px">ROC-AUC within each day</h2>
+    <div class="scroll"><table id="a9" class="small"></table></div>
+  </div>
+</section>
+
 <!-- ============ MODELS ============ -->
 <section id="tab-models" class="hidden">
   <div class="card"><h2>Models and the rule that set each threshold</h2><div class="scroll"><table id="mt"></table></div>
@@ -198,6 +250,7 @@ document.querySelectorAll("#tabs button").forEach(b=>b.addEventListener("click",
   document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-selected", x===b));
   document.querySelectorAll("section[id^=tab-]").forEach(s=>s.classList.toggle("hidden", s.id!=="tab-"+b.dataset.tab));
   if(b.dataset.tab==="replay") drawChart();
+  if(b.dataset.tab==="stream"&&typeof STREAM!=="undefined"&&STREAM){ streamChart(7); streamChart(9); }
 }));
 
 /* ---- health chips ---- */
@@ -359,6 +412,86 @@ $("#cstart").addEventListener("click",async()=>{
 });
 $("#cstop").addEventListener("click",async()=>{ try{ await getJSON("/api/capture/stop",{method:"POST",headers:hdr()}); }catch(e){} $("#cstatus").textContent="stopping ..."; setTimeout(cStatus,2500); });
 cStatus();
+
+/* ---- drift and adaptation (saved experiment results, read-only) ---- */
+const SCOL = ["var(--s0)","var(--s1)","var(--s2)","var(--s3)"];
+const cssv = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const METRICS = [["flagged_share","Share of records flagged","pct"],["fpr","False-positive rate","pct"],["recall","Recall (attacks flagged)","pct"],["threshold","Threshold (log scale)","log"]];
+let STREAM=null; const SCH={7:{arm:null,m:"flagged_share"},9:{arm:null,m:"flagged_share"}};
+function streamChart(ph){
+  const D=STREAM["phase"+ph], cv=$("#c"+ph), dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight; if(!W||!D) return;
+  cv.width=W*dpr; cv.height=H*dpr; const g=cv.getContext("2d"); g.scale(dpr,dpr); g.clearRect(0,0,W,H);
+  const keys=Object.keys(D.arms), m=SCH[ph].m, kind=METRICS.find(x=>x[0]===m)[2], n=D.days.length;
+  const L=48,R=10,T=16,B=26,w=W-L-R,h=H-T-B, grid=cssv("--grid"), ink=cssv("--muted");
+  const vals=keys.map(k=>D.arms[k].series[m].map(v=>v==null?null:(kind==="log"?Math.log10(v):v)));
+  let lo=Infinity,hi=-Infinity; vals.forEach(a=>a.forEach(v=>{ if(v!=null&&isFinite(v)){ lo=Math.min(lo,v); hi=Math.max(hi,v);} }));
+  if(kind==="pct"){ lo=0; hi=Math.max(hi,0.05); hi=Math.min(1,hi*1.08); } else { lo=Math.floor(lo); hi=Math.ceil(hi); if(hi===lo) hi=lo+1; }
+  const X=i=>L+w*i/Math.max(n-1,1), Y=v=>T+h*(1-(v-lo)/(hi-lo));
+  g.font="11px system-ui"; g.fillStyle=ink; g.strokeStyle=grid; g.lineWidth=1;
+  for(let i=0;i<=4;i++){ const v=lo+(hi-lo)*(1-i/4), y=T+h*i/4; g.beginPath(); g.moveTo(L,y); g.lineTo(W-R,y); g.stroke();
+    g.fillText(kind==="pct"?(100*v).toFixed(v<0.1?1:0)+"%":"1e"+v.toFixed(0),4,y+4); }
+  let prev=null, lastLabelX=-99; D.days.forEach((d,i)=>{ if(d!==prev){ g.strokeStyle=grid; g.beginPath(); g.moveTo(X(i),T); g.lineTo(X(i),T+h); g.stroke(); g.fillStyle=ink;
+    if(X(i)-lastLabelX>36){ g.fillText(d.slice(5),X(i)+2,H-8); lastLabelX=X(i); } prev=d; } });
+  if(ph===9){
+    g.setLineDash([4,4]); g.strokeStyle=cssv("--ink"); g.lineWidth=1.2;
+    D.change_points.forEach(c=>{ const x=X(c.interval); g.beginPath(); g.moveTo(x,T); g.lineTo(x,T+h); g.stroke(); });
+    g.setLineDash([]); g.fillStyle=cssv("--bad");
+    D.alarms.forEach(a=>{ const x=X(a.interval); g.beginPath(); g.moveTo(x,T-12); g.lineTo(x-5,T-2); g.lineTo(x+5,T-2); g.closePath(); g.fill(); });
+  }
+  keys.forEach((k,j)=>{ g.strokeStyle=cssv("--s"+j); g.lineWidth=1.8; g.beginPath(); let pen=false;
+    vals[j].forEach((v,i)=>{ if(v==null||!isFinite(v)){ pen=false; return; } const x=X(i),y=Y(v); pen?g.lineTo(x,y):g.moveTo(x,y); pen=true; }); g.stroke(); });
+  cv._geo={L,w,n};
+}
+function streamInfo(ph,ev){
+  const D=STREAM["phase"+ph], cv=$("#c"+ph); if(!cv._geo) return; const {L,w,n}=cv._geo;
+  const r=cv.getBoundingClientRect(), i=Math.max(0,Math.min(n-1,Math.round((ev.clientX-r.left-L)/w*(n-1)))), m=SCH[ph].m;
+  const f=v=>v==null?"n/a":(m==="threshold"?Number(v).toPrecision(3):(100*v).toFixed(2)+"%");
+  let txt=`Interval ${i+1} of ${n} (${D.days[i]}, ${D.arms[Object.keys(D.arms)[0]].series.n[i].toLocaleString()} records): `+Object.keys(D.arms).map(k=>`${D.arms[k].label.split(".")[0]} ${f(D.arms[k].series[m][i])}`).join(" | ");
+  txt+=` | true attack share ${f(D.arms[Object.keys(D.arms)[0]].series.attack_share[i])} (evaluation only)`;
+  if(ph===9){ const al=D.alarms.filter(a=>a.interval===i); if(al.length) txt+=` | drift alarm raised by: ${al.map(a=>a.monitors.join(", ")).join("; ")}`; }
+  $("#sinfo"+ph).textContent=txt;
+}
+function streamTables(){
+  const P7=STREAM.phase7, P9=STREAM.phase9, pc=x=>x==null?"n/a":(100*x).toFixed(2)+"%";
+  const mk=(P,keys,extra)=>[["Arm","Precision","Recall","F1-score","False-positive rate","Retrainings"].concat(extra.map(e=>e[0])),
+    keys.map((k,j)=>{ const a=P.arms[k], o=a.overall; return [`<span class="sw" style="background:${SCOL[j]}"></span> ${esc(a.label)}`,fmt(o.precision,4),fmt(o.recall,4),fmt(o.f1,4),fmt(o.fpr,4),a.retrainings.toLocaleString()].concat(extra.map(e=>e[1](a))); })];
+  let [h,r]=mk(P7,Object.keys(P7.arms),[["Attack share in trusted buffer (mean)",a=>a.mean_trusted_attack_share==null?"n/a":pc(a.mean_trusted_attack_share)]]); table($("#t7"),h,r);
+  [h,r]=mk(P9,Object.keys(P9.arms),[["Attack share in retraining data (mean)",a=>a.mean_retraining_attack_share==null?"n/a":pc(a.mean_retraining_attack_share)]]); table($("#t9"),h,r);
+  const auc=(P,keys,el)=>{ const days=Object.keys(P.roc_auc_per_day[keys[0]]); table(el,["Day"].concat(keys.map(k=>k.split("_")[0]+" - "+k.split("_").slice(1).join(" "))),
+      days.map(d=>[d].concat(keys.map(k=>fmt(P.roc_auc_per_day[k][d].roc_auc,3))))); };
+  auc(P7,["A_static","C_adaptive_baseline"],$("#a7")); auc(P9,Object.keys(P9.roc_auc_per_day),$("#a9"));
+}
+function streamFindings(){
+  const P7=STREAM.phase7, P9=STREAM.phase9, f4=x=>x.toFixed(4);
+  const ranked=(P,keys)=>keys.map(k=>[k,P.arms[k].overall.f1]).sort((a,b)=>b[1]-a[1]);
+  const sentence=(P,staticKey)=>{ const r=ranked(P,Object.keys(P.arms)), best=r[0], st=P.arms[staticKey].overall.f1;
+    const better=r.filter(x=>x[0]!==staticKey&&x[1]>st);
+    return (better.length? `${better.length} adaptive arm(s) have a higher overall F1 than the static arm (${f4(st)}): ${better.map(x=>P.arms[x[0]].label.split(".")[0]+" "+f4(x[1])).join(", ")}.`
+                         : `No adaptive arm has a higher overall F1 than the static arm: static ${f4(st)}, adaptive arms ${r.filter(x=>x[0]!==staticKey).map(x=>P.arms[x[0]].label.split(".")[0]+" "+f4(x[1])).join(", ")}.`); };
+  $("#s7find").textContent="From the table: "+sentence(P7,"A_static")+" The attack share in the trusted buffer is "+(100*P7.arms.C_adaptive_baseline.mean_trusted_attack_share).toFixed(1)+"% on average, against "+(100*P7.arms.A_static.overall.attacks/P7.arms.A_static.overall.n).toFixed(1)+"% attacks among all records of the stream: the guards did not keep attacks out of the retraining data.";
+  const d=P9.detection, dl=d.delays_records;
+  $("#s9det").textContent=`Detection: ${d.detected} of ${d.known_changes} known changes were detected, after ${Math.min(...dl).toLocaleString()} to ${Math.max(...dl).toLocaleString()} records. The monitor raised ${d.alarms} alarms; ${d.alarms_outside_known_changes} were outside the known changes (${d.alarms_in_attack_batches} of them in batches that contain attacks, which a distribution monitor cannot tell apart from a benign change).`;
+  $("#s9find").textContent="From the table: "+sentence(P9,"A_no_detection");
+}
+function streamIntro(){
+  const P7=STREAM.phase7, P9=STREAM.phase9, c=P7.config;
+  $("#p7intro").textContent=`Warm-up on ${P7.warm_up_days.join(" and ")}; evaluation on ${P7.evaluation_days.length} days (${P7.evaluation_days[0]} to ${P7.evaluation_days[P7.evaluation_days.length-1]}) in intervals of up to ${c.interval_records.toLocaleString()} records (${P7.days.length} intervals; the last interval of a day is shorter). The one-class autoencoder and its starting threshold (${P7.initial_threshold.toFixed(5)}) come from the benign warm-up days. Retraining every ${c.retrain_every} intervals on a buffer of up to ${c.buffer_intervals} intervals.`;
+  $("#p9intro").textContent=`Same stream and warm-up model; ${P9.monitors.length} label-free monitors (${P9.monitors.join(", ")}), ADWIN delta ${P9.config.adwin_delta} shared across the monitors, monitoring batches of ${P9.config.monitor_batch.toLocaleString()} records.`;
+}
+function streamSetup(ph){
+  const P=STREAM["phase"+ph], keys=Object.keys(P.arms);
+  $("#m"+ph).innerHTML=METRICS.map(([k,n])=>`<option value="${k}">${n}</option>`).join("");
+  $("#m"+ph).addEventListener("change",e=>{ SCH[ph].m=e.target.value; streamChart(ph); });
+  $("#l"+ph).innerHTML=keys.map((k,j)=>`<span style="display:inline-flex;align-items:center;gap:6px;font-size:13px"><span class="sw" style="background:${SCOL[j]}"></span>${esc(P.arms[k].label)}</span>`).join("");
+  $("#c"+ph).addEventListener("mousemove",ev=>streamInfo(ph,ev));
+}
+getJSON("/api/stream-experiments").then(r=>{
+  if(!r.data){ $("#smsg").textContent="The saved stream-experiment files (results/phase7_main*, results/phase9_main*, results/phase9_detection.json) were not found."; return; }
+  STREAM=r.data; $("#smsg").classList.add("hidden"); $("#p7card").hidden=false; $("#p9card").hidden=false;
+  streamIntro(); streamTables(); streamFindings(); streamSetup(7); streamSetup(9);
+  if(!$("#tab-stream").classList.contains("hidden")){ streamChart(7); streamChart(9); }
+}).catch(e=>{ $("#smsg").textContent="Could not load the stream experiments: "+e.message; });
+window.addEventListener("resize",()=>{ if(STREAM&&!$("#tab-stream").classList.contains("hidden")){ streamChart(7); streamChart(9); } });
 </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ Endpoints
   GET  /api/replay/days       days of the held-out test partition
   GET  /api/replay/stream     server-sent events: the test partition replayed in time order through the saved models
   GET  /api/capture/status|start|stop|stream   live capture (needs ENABLE_CAPTURE=1 and Npcap; flows follow CICFlowMeter's rules, see /api/flow-validation)
+  GET  /api/stream-experiments   saved results of the adaptive-baseline and concept-drift experiments (read-only; the served models are never adapted)
   GET  /api/flow-validation   how the flow builder was checked against CICFlowMeter, the training data and Wireshark, and false alarms on ordinary traffic
 Security defaults: binds to 127.0.0.1; if APP_API_KEY is set, POST and capture endpoints need the header X-API-Key.
 """
@@ -203,6 +204,13 @@ def flow_validation():
     except (OSError, KeyError, ValueError):
         pass
     return out
+
+
+@app.get("/api/stream-experiments")
+def stream_experiments():
+    """Saved results of the Phase 7 (adaptive baseline) and Phase 9 (concept drift) experiments, for the tab 'Drift and adaptation'. Read-only."""
+    from .streamexp import load
+    return {"data": load()}
 
 
 @app.get("/api/flow-validation")

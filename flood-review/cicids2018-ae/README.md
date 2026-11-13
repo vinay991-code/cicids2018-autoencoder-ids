@@ -46,6 +46,10 @@ and every Table 1 and Table 5 value; only the timing rows differed. On a differe
 
 `python src/phase13_trimmed.py --seed 42 --out-dir results_trim --model-dir models_trim` (about 1.5 hours per seed on a laptop), then `python src/aggregate_trimmed.py --trim-dir results_trim --seeds 42 1 2` and `python src/verify_trimmed.py`. Result: no gain over the ordinary unsupervised model; see the report, Section 5.5.
 
+## DAE-LR experiment (phase 14)
+
+`python src/phase14_daelr.py --seed 42 --out-dir results_daelr --model-dir models_daelr` (8 models per seed, about 1 hour per seed; `resume_phase14.bat` restarts an interrupted run and skips finished models), then `python src/aggregate_daelr.py --dir results_daelr --seeds 42 1 2` and `python src/verify_daelr.py`. Result: no gain over the ordinary unsupervised model; see the report, Section 5.5 (Table 8b).
+
 ## Dashboard, backend and live monitor (added afterwards)
 
 `python run_app.py` serves a results dashboard, a scoring API and a replay of the held-out test records through the saved models at http://127.0.0.1:8000. A packet-capture module (flows built with the rules of CICFlowMeter, the tool that made the training data) and Docker files are included. The flow builder was checked against CICFlowMeter's own flow code, the training data and Wireshark: see `reports/FLOW_VALIDATION.md`. Read `APP_README.md` first: it states what was tested and what was not (the Docker image was not built; detection of real attacks on live networks was not measured).

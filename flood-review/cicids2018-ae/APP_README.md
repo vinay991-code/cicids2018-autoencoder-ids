@@ -9,11 +9,16 @@ Added after the experiments, at the request of the project owner (the original t
 | Backend (FastAPI) | `app/main.py` | Serves the dashboard and a JSON API: `/api/results`, `/api/models`, `/api/score`, `/api/replay/*`, `/api/capture/*`, interactive docs at `/docs` |
 | Scoring service | `app/service.py` | Loads the saved models, the Phase 2 scaler and the fixed thresholds. Nothing is trained here |
 | Replay monitor | `app/replay.py` | Replays the held-out test records in time order through the saved models (server-sent events) |
-| Dashboard (frontend) | `app/static/index.html` | One page, no external libraries: Results, Live replay, Live capture, Models and thresholds |
+| Dashboard (frontend) | `app/static/index.html` | One page, no external libraries: Results, Live replay, Wireshark / PCAP, Live capture, Drift and adaptation, Models and thresholds |
+| Drift and adaptation tab | `app/streamexp.py` | Shows the SAVED results of the adaptive-baseline (Phase 7) and concept-drift (Phase 9) experiments: per-interval curves for every arm, drift alarms, the four known changes, arm tables. Read-only: nothing is computed or adapted while serving. Endpoint `/api/stream-experiments` |
 | Live capture | `app/livecapture.py`, `app/capture.py` | Interface to flows to models, with an interface picker and a headers-only pcap for Wireshark. Off unless started with `--enable-capture` |
 | Wireshark / PCAP analysis | `app/pcapjob.py`, `tools/pcap_score.py` | Capture file or tshark stream to flows to scores to Wireshark filters and CSV |
-| Tests | `tests/test_app.py`, `tests/test_pcap.py` | 27 tests (11 of them use Wireshark's `tshark` as an independent check) |
+| Tests | `tests/` | 47 tests, among them checks of the flow builder against CICFlowMeter's own code and Wireshark's `tshark`, and a test that the Drift and adaptation tab shows exactly the numbers in the saved experiment files |
 | Deployment files | `start_app.bat`, `deploy/windows_autostart.ps1`, `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `requirements-app.txt` | One-click start, optional start at logon, container build (not yet built, see below) |
+
+## Concept drift and the adaptive baseline
+
+The served models are static: they are never retrained, thresholded again or otherwise adapted while the application runs (`tests/test_app.py::test_served_models_are_not_adapted`). Concept drift monitoring and the adaptive baseline were studied as offline experiments on the whole data set replayed in time order (Phases 7 and 9, report Section 5.4), and the **Drift and adaptation** tab shows their saved results: for each arm the share flagged, false-positive rate, recall and threshold in every interval, the drift alarms of the label-free monitor, the four known benign changes, and the tables of results. In those experiments adaptation did not improve detection over the static detector (the tab states the numbers); the experiments are the reason this application does not adapt. The tab is one run (seed 42) and does not test differences for significance; the report has the bootstrap intervals.
 
 ## Wireshark integration
 
