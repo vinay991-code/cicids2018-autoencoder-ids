@@ -1,0 +1,46 @@
+PASS C1 numpy supervised gate reproduces saved PyTorch probabilities (Phase 4, first 200,000 test rows): max abs difference 7.75e-07 (tolerance 1e-5)
+PASS C2 numpy unseen-supervised gate with refit scaler reproduces saved PyTorch probabilities (Phase 6, first 200,000 test rows): max abs difference 6.85e-07 (tolerance 1e-5); saved scores cover the full test partition: True
+PASS C3 nptrain forward equals the verified npmodels forward on the anchor set: max abs difference 0.00e+00
+gate probabilities ready for 9,504,036 records  [18s]
+PASS C4 determinism: two runs give identical parameters and scores: 12 intervals, parameter hash 661b9155efdb2db9
+PASS C5 label independence: all labels replaced by zeros gives identical parameters, scores and thresholds: 12 intervals, accepted updates 4
+PASS C6 frozen arm scores equal the Phase 16 cached scores: max abs difference 6.71e-08 on 591,870 records
+PASS C7 every update lowered the reconstruction loss on its own training batch: 4 update attempts in the smoke run
+arm S_frozen ...
+  done [55s]; accepted updates 0 of 0
+arm N_adaptive ...
+    interval 24/194  thr 1.392e-02  updates 8 (accepted 8)
+    interval 48/194  thr 1.392e-02  updates 16 (accepted 16)
+    interval 72/194  thr 1.391e-02  updates 24 (accepted 24)
+    interval 96/194  thr 1.391e-02  updates 32 (accepted 32)
+    interval 120/194  thr 1.390e-02  updates 40 (accepted 40)
+    interval 144/194  thr 1.391e-02  updates 48 (accepted 48)
+    interval 168/194  thr 1.391e-02  updates 56 (accepted 56)
+    interval 192/194  thr 1.391e-02  updates 64 (accepted 64)
+  done [752s]; accepted updates 64 of 64
+arm Gm_gated_main ...
+    interval 24/194  thr 1.392e-02  updates 8 (accepted 8)
+    interval 48/194  thr 1.392e-02  updates 16 (accepted 16)
+    interval 72/194  thr 1.391e-02  updates 24 (accepted 24)
+    interval 96/194  thr 1.392e-02  updates 32 (accepted 32)
+    interval 120/194  thr 1.391e-02  updates 40 (accepted 40)
+    interval 144/194  thr 1.392e-02  updates 48 (accepted 48)
+    interval 168/194  thr 1.392e-02  updates 56 (accepted 56)
+    interval 192/194  thr 1.390e-02  updates 64 (accepted 64)
+  done [347s]; accepted updates 64 of 64
+arm Gu_gated_unseen ...
+    interval 24/194  thr 1.393e-02  updates 8 (accepted 8)
+    interval 48/194  thr 1.392e-02  updates 16 (accepted 16)
+    interval 72/194  thr 1.392e-02  updates 24 (accepted 24)
+    interval 96/194  thr 1.391e-02  updates 32 (accepted 32)
+    interval 120/194  thr 1.392e-02  updates 40 (accepted 40)
+    interval 144/194  thr 1.392e-02  updates 48 (accepted 48)
+    interval 168/194  thr 1.391e-02  updates 56 (accepted 56)
+    interval 192/194  thr 1.391e-02  updates 64 (accepted 64)
+  done [282s]; accepted updates 64 of 64
+S_frozen           P 0.1347 R 0.0136 F1 0.0247 FPR 0.0122 FNR 0.9864 | accepted 0/0
+N_adaptive         P 0.1372 R 0.0136 F1 0.0247 FPR 0.0119 FNR 0.9864 | accepted 64/64
+Gm_gated_main      P 0.1400 R 0.0138 F1 0.0251 FPR 0.0118 FNR 0.9862 | accepted 64/64
+Gu_gated_unseen    P 0.1413 R 0.0137 F1 0.0250 FPR 0.0116 FNR 0.9863 | accepted 64/64
+criteria: {"N_adaptive": {"a_recovers_on_shifted_days": false, "b_keeps_ranking_on_attack_days": false, "c_overall_f1_not_lower": true, "all_three": false}, "Gm_gated_main": {"a_recovers_on_shifted_days": true, "b_keeps_ranking_on_attack_days": true, "c_overall_f1_not_lower": true, "all_three": true}, "Gu_gated_unseen": {"a_recovers_on_shifted_days": false, "b_keeps_ranking_on_attack_days": false, "c_overall_f1_not_lower": true, "all_three": false}}
+finished [1707s]

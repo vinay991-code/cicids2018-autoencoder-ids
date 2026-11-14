@@ -37,6 +37,7 @@ https://www.unb.ca/cic/datasets/ids-2018.html into `data/raw`. Expected byte siz
 | 11 Hybrid (supervised OR unsupervised) | `python src/phase11_hybrid.py` (uses saved scores from Phases 3, 4 and 6; no torch needed) | `results/phase11_hybrid.json`, `reports/phase11_hybrid.md` | ~1 min |
 | 12 Label-free thresholds (exploratory) | `python src/phase12_thresholds.py` (uses saved scores; no torch needed) | `results/phase12_thresholds.json`, `reports/phase12_thresholds.md`, `reports/phase12_findings.md` | ~3 min |
 | 16 Adaptive threshold, frozen model | `python src/phase16_adaptive_threshold.py` then `python src/summarise_threshold.py` (numpy only, no torch; needs the Phase 7 baseline in `data/interim` and `data/processed/X_stream.npy`) | `results_threshold/`, `reports/phase16_findings.md` | ~5 min |
+| 17 Drift recovery, supervised gate (numpy training) | `python -m pytest tests/test_nptrain.py` then `python src/phase17_drift_recovery.py --check-only` then `python src/phase17_drift_recovery.py` then `python src/summarise_drift.py` (numpy only, no torch; needs the Phase 7 baseline in `data/interim`, `data/processed/X_stream.npy` and the Phase 4 and 6 models) | `results_drift/`, `reports/phase17_findings.md` | ~30 min |
 | 10 Verify and report | `python src/verify_results.py` then `python src/phase10_report.py` | `reports/verification.md`, `reports/FINAL_REPORT.md` | ~3 min |
 
 Notes: the Phase 5 script needs the console logs of the Phase 3 and 4 runs because the loss histories were not written to a file during
