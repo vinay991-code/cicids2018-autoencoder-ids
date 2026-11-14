@@ -100,6 +100,6 @@ The adaptive, confidence-aware and drift experiments (Phases 7 to 9) are not par
 
 * `pip install -r requirements-app.txt` (and `pip install pytest httpx` for the tests), then `python run_app.py` and open http://127.0.0.1:8000. The Results, Wireshark / PCAP and Models tabs work from the package alone (the trained models, the scaler and the results are included).
 * The **Live replay** tab needs `data/processed/X_test.npy` and `meta_test.pkl`, which are too large for this package: create them with the Phase 2 command in README.md, or copy them from the project folder.
-* `python -m pytest tests -q` runs 47 tests; those that need the large data files, the CICFlowMeter reference build or a live capture driver (Npcap) are skipped without them.
+* `python -m pytest tests -q` runs 52 tests (on the author's laptop 51 pass and 1 is skipped because torch cannot be imported there); those that need the large data files, the CICFlowMeter reference build or a live capture driver (Npcap) are skipped without them.
 * The flow builder is checked against CICFlowMeter's own flow code, the training data and Wireshark: read `reports/FLOW_VALIDATION.md`; to repeat it, `python tools/cicflowmeter_ref/build_reference.py` (git, a JDK, internet) and then `python -m pytest tests/test_flow_parity.py -q`.
 * Read `APP_README.md` first (what was tested, what was not, and the cautions for live capture).

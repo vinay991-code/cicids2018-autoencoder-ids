@@ -13,7 +13,7 @@ Added after the experiments, at the request of the project owner (the original t
 | Drift and adaptation tab | `app/streamexp.py` | Shows the SAVED results of the adaptive-baseline (Phase 7) and concept-drift (Phase 9) experiments: per-interval curves for every arm, drift alarms, the four known changes, arm tables. Read-only: nothing is computed or adapted while serving. Endpoint `/api/stream-experiments` |
 | Live capture | `app/livecapture.py`, `app/capture.py` | Interface to flows to models, with an interface picker and a headers-only pcap for Wireshark. Off unless started with `--enable-capture` |
 | Wireshark / PCAP analysis | `app/pcapjob.py`, `tools/pcap_score.py` | Capture file or tshark stream to flows to scores to Wireshark filters and CSV |
-| Tests | `tests/` | 47 tests, among them checks of the flow builder against CICFlowMeter's own code and Wireshark's `tshark`, and a test that the Drift and adaptation tab shows exactly the numbers in the saved experiment files |
+| Tests | `tests/` | 52 tests (51 pass and 1 is skipped on the author's laptop because torch cannot be imported there), among them checks of the flow builder against CICFlowMeter's own code and Wireshark's `tshark`, and a test that the Drift and adaptation tab shows exactly the numbers in the saved experiment files |
 | Deployment files | `start_app.bat`, `deploy/windows_autostart.ps1`, `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `requirements-app.txt` | One-click start, optional start at logon, container build (not yet built, see below) |
 
 ## Concept drift and the adaptive baseline
