@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Comparative Evaluation of Supervised and Unsupervised Autoencoders for Network Anomaly Detection Using CICIDS2018"
+type: software
+authors:
+  - family-names: "Kamisetty"
+    given-names: "Vinay Kumar"
+repository-code: "https://github.com/vinay991-code/cicids2018-autoencoder-ids"
+abstract: "Supervised and unsupervised autoencoders compared on CSE-CIC-IDS2018 for known and unseen attacks, training-data contamination and adaptation over time, with a dashboard and Wireshark/PCAP analyser."

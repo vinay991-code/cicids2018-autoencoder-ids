@@ -3,6 +3,8 @@
 Experiments, preprocessing, models and evaluation for "Comparative Evaluation of Supervised and Unsupervised Autoencoders for Network
 Anomaly Detection Using CICIDS2018". No packet capture, dashboard or application is included.
 
+**Contributor:** Vinay Kumar Kamisetty ([@vinay991-code](https://github.com/vinay991-code)).
+
 **Start with `reports/FINAL_REPORT.md`** (Tables 1-5, figures, limitations). `reports/verification.md` lists 138 independent
 cross-checks of the reported numbers. Per-phase details are in `reports/phase*_findings.md` and `reports/phase*_tables.md`.
 
